@@ -31,3 +31,5 @@ npm run netlify:deploy
 The app uses Dallas Stars Victory Green (`#006847`) with a generated star logo.
 `npm run web:icons` regenerates `assets/icon.png` and the 192/512px PWA icons
 in `public/`.
+
+Allen and Arlington, you're next. Maybe.
