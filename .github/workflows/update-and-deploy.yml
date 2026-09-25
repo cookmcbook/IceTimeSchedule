@@ -1,0 +1,101 @@
+name: Update schedules and deploy
+
+on:
+  schedule:
+    # Fridays at 11:00 UTC = 6 AM in Dallas (CDT), 5 AM in winter (CST).
+    - cron: '0 11 * * 5'
+  # Lets you run it by hand from the Actions tab.
+  workflow_dispatch:
+
+permissions:
+  # Write access so the job can commit the refreshed schedule-data.json.
+  contents: write
+
+# Never run two deploys at once; a manual run queues behind a scheduled one.
+concurrency:
+  group: update-and-deploy
+  cancel-in-progress: false
+
+jobs:
+  update-and-deploy:
+    # Windows + Windows PowerShell 5.1, the same environment
+    # Update-Schedules.ps1 is written and run in locally.
+    runs-on: windows-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # The scraper uses the local clock to drop sessions before "today", so
+      # run it on Dallas time rather than the runner's default UTC.
+      - name: Use Dallas time zone
+        run: tzutil /s "Central Standard Time"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Scrape schedules
+        shell: powershell
+        run: .\Update-Schedules.ps1 -ForceRefresh
+
+      # Guard against deploying an empty schedule if the StarCenter site is
+      # down or changed its page format. Partial failures still deploy, with
+      # a warning on the run.
+      - name: Check scraped data
+        shell: powershell
+        run: |
+          $data = Get-Content schedule-data.json -Raw | ConvertFrom-Json
+          $count = @($data.sessions).Count
+          Write-Host "Sessions: $count"
+          if ($count -eq 0) {
+            Write-Host '::error::Scrape returned no sessions; not deploying.'
+            exit 1
+          }
+          $failed = @($data.failedLocations)
+          if ($failed.Count -gt 0) {
+            Write-Host "::warning::No schedule data this run for: $($failed -join ', ')"
+          }
+
+      - name: Build
+        run: npm run web:build
+
+      - name: Deploy to Netlify
+        run: npx --yes netlify-cli deploy --dir=dist --prod --message "Weekly schedule update (run ${{ github.run_number }})"
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
+      # Commits the new data only after a successful deploy, so the repo copy
+      # always matches what's live. The weekly commit also counts as repo
+      # activity, which stops GitHub from disabling this schedule after 60
+      # quiet days. [skip ci] keeps it from triggering a Netlify build.
+      - name: Commit updated schedule data
+        shell: powershell
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add schedule-data.json
+          git diff --cached --quiet
+          if ($LASTEXITCODE -eq 0) {
+            Write-Host 'Schedule data unchanged; nothing to commit.'
+            exit 0
+          }
+          $today = Get-Date -Format 'yyyy-MM-dd'
+          git commit -m "Update schedule data for $today [skip ci]"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          git push
+          exit $LASTEXITCODE
+
+      # Keeps each week's scraped data downloadable from the run page.
+      - name: Save scraped data
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: schedule-data
+          path: schedule-data.json
+          retention-days: 30
