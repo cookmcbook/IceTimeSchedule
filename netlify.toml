@@ -1,0 +1,6 @@
+[build]
+  command = "npm run web:build"
+  publish = "dist"
+
+# SPA fallback lives in public/_redirects (copied into dist on export), so it
+# also applies to `npm run netlify:deploy` uploads.
