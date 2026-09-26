@@ -48,46 +48,53 @@ export const VT_CARD_HEIGHT = 62;
 export const VT_CARD_GAP = 6;
 export const VT_ROW_PADDING = 8;
 
+// Grouped by what you'd go there to do rather than by age: the schedule's
+// descriptions show the age split doesn't hold ("Hockey Academy" is mostly
+// Adult Hockey Academy, "Rookies" covers Little and ADULT Rookies, "Open
+// Hockey" is Euless's Youth Open Hockey). Activities not listed here land in
+// an "Other" group, added only when one appears.
 export const ACTIVITY_GROUPS = [
   {
-    name: 'Skating',
-    activities: ['Freestyle', 'Skating Academy', 'Skating Pro Time'],
-  },
-  {
-    name: 'Adult Hockey',
-    activities: ['Adult Drop-In', 'Adult Stick & Puck'],
-  },
-  {
-    name: 'Youth Hockey',
-    activities: [
-      'Parent Child',
-      'Youth Open Hockey',
-      'AT&T High School Hockey',
-      'Hockey Academy',
-      'Rookies',
-    ],
-  },
-  {
-    name: 'Open Ice',
-    activities: ['Hockey Pro Time', 'Open Hockey'],
-  },
-  {
-    name: 'Public Skating',
+    name: 'Public Skate',
     activities: ['Public Skate'],
   },
   {
-    name: 'Other',
-    activities: ['Camps & Clinics'],
+    // Figure skating practice ice and skating lessons.
+    name: 'Figure Skating',
+    activities: ['Freestyle', 'Skating Pro Time', 'Skating Academy'],
+  },
+  {
+    // Show up and play: drop-in games and stick & puck, adult and youth.
+    name: 'Open Hockey',
+    activities: [
+      'Adult Drop-In',
+      'Adult Stick & Puck',
+      'Youth Open Hockey',
+      'Open Hockey',
+      'Parent Child',
+    ],
+  },
+  {
+    // Lessons, classes, coach-booked ice, and league games.
+    name: 'Hockey Programs',
+    activities: [
+      'Hockey Academy',
+      'Rookies',
+      'Hockey Pro Time',
+      'Camps & Clinics',
+      'AT&T High School Hockey',
+    ],
   },
 ] as const;
 
+export const OTHER_ACTIVITY_GROUP = 'Other';
+
 export const CATEGORY_COLORS: Record<string, string> = {
-  Skating: '#8B5CF6',
-  'Adult Hockey': '#006847',
-  'Youth Hockey': '#2F80ED',
-  'Open Ice': '#F2994A',
-  'Public Skating': '#00A6A6',
-  Other: '#C4458A',
+  'Public Skate': '#00A6A6',
+  'Figure Skating': '#8B5CF6',
+  'Open Hockey': '#006847',
+  'Hockey Programs': '#2F80ED',
+  [OTHER_ACTIVITY_GROUP]: '#C4458A',
 };
 
 // activity -> color, built once so each event card is a map lookup instead

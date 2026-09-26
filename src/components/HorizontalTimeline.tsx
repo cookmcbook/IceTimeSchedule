@@ -184,7 +184,12 @@ export function HorizontalTimeline({
   ).map((hour) => (
     <View
       key={hour}
-      style={[styles.hourLabel, { left: (hour - FIRST_HOUR) * HOUR_WIDTH }]}>
+      style={[
+        styles.hourLabel,
+        { left: (hour - FIRST_HOUR) * HOUR_WIDTH },
+        // Web: each hour is a horizontal snap point.
+        IS_WEB && styles.webSnapStart,
+      ]}>
       <Text style={styles.hourLabelText}>{hourLabel(hour)}</Text>
     </View>
   ));
@@ -247,7 +252,7 @@ export function HorizontalTimeline({
       <View style={styles.timelineContainer}>
         <View
           ref={webScrollRef}
-          style={styles.webScrollBoth}
+          style={[styles.webScrollBoth, styles.webSnapHours]}
           onLayout={(event) =>
             setGridViewportWidth(
               Math.max(0, event.nativeEvent.layout.width - LABEL_WIDTH)

@@ -43,6 +43,7 @@ import {
   HEADER_MAX_HEIGHT,
   HEADER_MIN_HEIGHT,
   HEADER_TITLE_ZONE,
+  OTHER_ACTIVITY_GROUP,
   pageSidePadding,
   TIMELINE_VIEW_STORAGE_KEY,
 } from './constants';
@@ -66,6 +67,11 @@ import { openDirectionsForAddress } from './utils/links';
 const HEADER_HOCKEY_IMAGE = require('../assets/images/header-hockey.jpg');
 const HEADER_SKATER_IMAGE = require('../assets/images/header-skater.jpg');
 const EMPTY_STATE_IMAGE = require('../assets/images/empty-rink.jpg');
+
+// Space between the top of the header's content area (below the status bar
+// / Dynamic Island) and the title. Matches styles.heading's own paddingTop,
+// which it replaces so the safe-area inset can be added to it.
+const HEADER_CONTENT_TOP_PADDING = 14;
 
 // The About button is hidden from the header for now; the About modal is
 // kept so flipping this back to true restores it.
@@ -168,13 +174,19 @@ export default function ScheduleApp() {
       (activity) => !knownActivities.has(activity)
     );
 
-    return ACTIVITY_GROUPS.map((group) => ({
-      name: group.name,
-      activities: [
-        ...group.activities.filter((activity) => activities.includes(activity)),
-        ...(group.name === 'Other' ? otherActivities : []),
-      ],
-    })).filter((group) => group.activities.length > 0);
+    const groups: { name: string; activities: string[] }[] = ACTIVITY_GROUPS.map(
+      (group) => ({
+        name: group.name,
+        activities: group.activities.filter((activity) =>
+          activities.includes(activity)
+        ),
+      })
+    );
+    // Anything the scraper returns that isn't in ACTIVITY_GROUPS yet.
+    if (otherActivities.length > 0) {
+      groups.push({ name: OTHER_ACTIVITY_GROUP, activities: otherActivities });
+    }
+    return groups.filter((group) => group.activities.length > 0);
   }, [activities]);
 
   const [selectedDate, setSelectedDate] = useState(today);
@@ -337,9 +349,13 @@ export default function ScheduleApp() {
   // The photo is always exactly header-height tall and pinned right, so its
   // subject is never cropped: on phones only its empty left edge overflows,
   // and on wide screens the theme background fills the space to its left.
-  const headerHeight = Math.round(
+  const headerContentHeight = Math.round(
     Math.min(HEADER_MAX_HEIGHT, Math.max(HEADER_MIN_HEIGHT, windowWidth / 3))
   );
+  // The header also extends up behind the status bar / Dynamic Island (the
+  // page doesn't pad its top edge), so the photo fills that strip too while
+  // the title and buttons are pushed down below it.
+  const headerHeight = headerContentHeight + insets.top;
   const headerImageWidth = headerHeight * 3;
   // One smooth gradient: solid theme background up to where the photo starts,
   // then an eased fade to clear across the photo's (pre-blurred) empty left
@@ -455,14 +471,22 @@ export default function ScheduleApp() {
       : undefined;
 
   return (
-    // Pads every edge by the device's safe-area insets (notch, Dynamic Island,
-    // home indicator, landscape cutouts) while its own theme background fills
-    // those areas, so nothing under the status bar shows a mismatched color.
+    // Pads the bottom and side edges by the device's safe-area insets (home
+    // indicator, landscape cutouts) while its own theme background fills
+    // them. The top edge isn't padded here: the header photo extends up under
+    // the status bar / Dynamic Island, and the header pads its own content.
     <SafeAreaView
       style={styles.safeArea}
-      edges={['top', 'bottom', 'left', 'right']}>
+      edges={['bottom', 'left', 'right']}>
       <View style={styles.container}>
-        <View style={[styles.heading, { height: headerHeight }]}>
+        <View
+          style={[
+            styles.heading,
+            {
+              height: headerHeight,
+              paddingTop: HEADER_CONTENT_TOP_PADDING + insets.top,
+            },
+          ]}>
           <Image
             source={headerImage}
             resizeMode="cover"
@@ -731,7 +755,7 @@ export default function ScheduleApp() {
       <FilterModal
         visible={filtersVisible}
         locations={locations}
-        activityGroups={activityGroups as { name: string; activities: string[] }[]}
+        activityGroups={activityGroups}
         selectedLocations={selectedLocations}
         selectedActivities={selectedActivities}
         onToggleLocation={toggleLocation}

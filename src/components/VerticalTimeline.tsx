@@ -273,7 +273,14 @@ export function VerticalTimeline({
   );
 
   const headerCells = columns.map((location) => (
-    <View key={location} style={[styles.vtHeaderCell, { width: columnWidth }]}>
+    <View
+      key={location}
+      style={[
+        styles.vtHeaderCell,
+        { width: columnWidth },
+        // Web: each rink column is a horizontal snap point.
+        IS_WEB && styles.webSnapStart,
+      ]}>
       <Text style={styles.vtHeaderText} numberOfLines={1}>
         {location}
       </Text>
@@ -339,7 +346,7 @@ export function VerticalTimeline({
     const contentWidth = VT_TIME_COLUMN_WIDTH + gridWidth;
     return (
       <View style={styles.timelineContainer}>
-        <View ref={webScrollRef} style={styles.webScrollBoth}>
+        <View ref={webScrollRef} style={[styles.webScrollBoth, styles.webSnapColumns]}>
           <View style={{ width: contentWidth }}>
             <View
               ref={webHeaderRowRef}

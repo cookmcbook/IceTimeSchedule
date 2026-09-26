@@ -360,6 +360,23 @@ export function createStyles(UI: ThemeColors) {
       left: 0,
       zIndex: 2,
     }),
+    // Horizontal scroll snapping (web). Sideways scrolling settles on a rink
+    // column (vertical view) or an hour (horizontal view), so small sideways
+    // drift during an up/down swipe snaps back to a clean edge. Only the x
+    // axis snaps; up/down scrolling is free. scroll-padding-left keeps each
+    // snap point just right of the pinned left column.
+    webSnapColumns: webOnly({
+      scrollSnapType: 'x mandatory',
+      scrollPaddingLeft: VT_TIME_COLUMN_WIDTH,
+    }),
+    webSnapHours: webOnly({
+      scrollSnapType: 'x mandatory',
+      scrollPaddingLeft: LABEL_WIDTH,
+    }),
+    // Marks a header cell (rink column / hour) as a snap point.
+    webSnapStart: webOnly({
+      scrollSnapAlign: 'start',
+    }),
     // Contains the grid's own z-order (e.g. the now line) beneath the pinned
     // header and column.
     gridStack: {
