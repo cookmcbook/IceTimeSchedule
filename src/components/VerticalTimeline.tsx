@@ -4,7 +4,6 @@ import React, {
   useEffect,
   useMemo,
   useRef,
-  useState,
 } from 'react';
 import { Animated, Platform, Pressable, ScrollView, Text, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -181,40 +180,47 @@ export function VerticalTimeline({
   const gridWidth = columnWidth * columns.length;
   const maxScrollX = Math.max(0, gridWidth - gridViewportWidth);
 
-  // How many columns are still (partly) off the right edge. Only updates
-  // state when the count changes, not on every scroll frame.
   const gridRef = useRef<ScrollView>(null);
-  const offsetX = useRef(0);
-  const [hiddenRight, setHiddenRight] = useState(0);
-  const updateHiddenRight = useCallback(() => {
-    const visibleRight = offsetX.current + gridViewportWidth + 1;
-    const fullyVisible = Math.floor(visibleRight / columnWidth);
-    const next = Math.max(0, columns.length - fullyVisible);
-    setHiddenRight((current) => (current === next ? current : next));
-  }, [gridViewportWidth, columnWidth, columns.length]);
-  useEffect(updateHiddenRight, [updateHiddenRight]);
 
-  // Same sync as the horizontal timeline: the header translates by the
-  // grid's scroll offset rather than scrolling on its own. The listener runs
-  // on the JS side (even with the native driver) to track the hidden count.
+  // Header synchronization stays on the animation graph, with no JS listener
+  // or React state updates while the grid is scrolling.
   const handleScroll = useMemo(
     () =>
       Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], {
         useNativeDriver: Platform.OS !== 'web',
-        listener: (event: { nativeEvent: { contentOffset: { x: number } } }) => {
-          offsetX.current = event.nativeEvent.contentOffset.x;
-          updateHiddenRight();
-        },
       }),
-    [scrollX, updateHiddenRight]
+    [scrollX]
   );
   const headerTranslate = useMemo(() => Animated.multiply(scrollX, -1), [scrollX]);
+  const initialHiddenRight = Math.max(
+    0,
+    columns.length - Math.floor((gridViewportWidth + 1) / columnWidth)
+  );
+  const hiddenRightLabels = useMemo(
+    () => Array.from({ length: initialHiddenRight }, (_, index) => {
+      const count = initialHiddenRight - index;
+      const lower = (columns.length - count) * columnWidth - gridViewportWidth - 1;
+      const upper = lower + columnWidth;
+      const epsilon = Math.min(0.5, columnWidth / 100);
+      return {
+        count,
+        opacity: scrollX.interpolate({
+          inputRange: [lower - epsilon, lower, upper - epsilon, upper],
+          outputRange: [0, 1, 1, 0],
+          extrapolate: 'clamp',
+        }),
+      };
+    }),
+    [columnWidth, columns.length, gridViewportWidth, initialHiddenRight, scrollX]
+  );
 
   // Advances to the next column boundary.
   const scrollToNextColumn = useCallback(() => {
-    const next = (Math.floor((offsetX.current + 1) / columnWidth) + 1) * columnWidth;
-    gridRef.current?.scrollTo({ x: Math.min(maxScrollX, next), animated: true });
-  }, [columnWidth, maxScrollX]);
+    scrollX.stopAnimation((offset) => {
+      const next = (Math.floor((offset + 1) / columnWidth) + 1) * columnWidth;
+      gridRef.current?.scrollTo({ x: Math.min(maxScrollX, next), animated: true });
+    });
+  }, [columnWidth, maxScrollX, scrollX]);
 
   if (rows.length === 0) {
     return (
@@ -249,7 +255,7 @@ export function VerticalTimeline({
           </Animated.View>
         </View>
 
-        {hiddenRight > 0 ? (
+        {initialHiddenRight > 0 ? (
           <View style={styles.vtMoreHint}>
             <LinearGradient
               pointerEvents="none"
@@ -263,9 +269,20 @@ export function VerticalTimeline({
                 onPress={scrollToNextColumn}
                 hitSlop={8}
                 accessibilityRole="button"
-                accessibilityLabel={`Scroll to see ${hiddenRight} more ${hiddenRight === 1 ? 'rink' : 'rinks'}`}
+                accessibilityLabel="Scroll to see more rinks"
                 style={styles.vtMorePill}>
-                <Text style={styles.vtMorePillText}>{hiddenRight} more</Text>
+                <View>
+                  <Text style={[styles.vtMorePillText, { opacity: 0 }]}>
+                    {initialHiddenRight} more
+                  </Text>
+                  {hiddenRightLabels.map(({ count, opacity }) => (
+                    <Animated.Text
+                      key={count}
+                      style={[styles.vtMorePillText, { position: 'absolute', opacity }]}>
+                      {count} more
+                    </Animated.Text>
+                  ))}
+                </View>
                 <Ionicons name="chevron-forward" size={13} color={UI.accentText} />
               </Pressable>
             </View>
