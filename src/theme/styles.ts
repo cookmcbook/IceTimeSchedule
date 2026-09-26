@@ -343,10 +343,12 @@ export function createStyles(UI: ThemeColors) {
     // left column pinned by position: sticky so the browser keeps them in
     // place during scroll with no JavaScript. Pinned parts need opaque
     // backgrounds, which their own styles already provide.
+    // overscrollBehavior 'none': no rubber-band bounce past the edges (and no
+    // scroll chaining to the page), so scrolling stops at the content.
     webScrollBoth: webOnly({
       flex: 1,
       overflow: 'auto',
-      overscrollBehavior: 'contain',
+      overscrollBehavior: 'none',
     }),
     webStickyTop: webOnly({
       position: 'sticky',
@@ -362,6 +364,68 @@ export function createStyles(UI: ThemeColors) {
     // header and column.
     gridStack: {
       zIndex: 0,
+    },
+
+    // Wraps everything below the header photo; side padding is applied
+    // inline from pageSidePadding() on wider screens.
+    pageBody: {
+      flex: 1,
+    },
+    timelineArea: {
+      flex: 1,
+    },
+    // Padded (wider) layouts: a thin rounded frame around the timeline.
+    timelineAreaFramed: {
+      borderWidth: 1,
+      borderColor: UI.border,
+      borderRadius: 8,
+      overflow: 'hidden',
+    },
+
+    // "N more" hints, overlaid on the timeline (see MoreHint).
+    moreHintRight: {
+      position: 'absolute',
+      top: 0,
+      right: 0,
+      height: VT_HEADER_HEIGHT,
+      flexDirection: 'row',
+      zIndex: 5,
+    },
+    moreHintRightFade: {
+      width: 28,
+      height: '100%',
+    },
+    moreHintRightBacking: {
+      height: '100%',
+      justifyContent: 'center',
+      paddingRight: 8,
+      backgroundColor: UI.surfaceAlt,
+    },
+    moreHintDown: {
+      position: 'absolute',
+      left: 0,
+      bottom: 0,
+      width: LABEL_WIDTH,
+      height: 56,
+      alignItems: 'center',
+      justifyContent: 'flex-end',
+      paddingBottom: 10,
+      zIndex: 5,
+    },
+    morePill: {
+      height: 26,
+      paddingLeft: 10,
+      paddingRight: 6,
+      borderRadius: 13,
+      backgroundColor: UI.accent,
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 2,
+    },
+    morePillText: {
+      color: UI.accentText,
+      fontSize: 11,
+      fontWeight: '800',
     },
     verticalTimeline: {
       flex: 1,

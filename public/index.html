@@ -57,6 +57,12 @@
       body {
         overflow: hidden;
       }
+      /* No rubber-band bounce or pull-to-refresh on the page itself; the
+         timelines' scroll areas set the same on their own (styles.ts). */
+      html,
+      body {
+        overscroll-behavior: none;
+      }
       /* These styles make the root element full-height */
       #root {
         display: flex;

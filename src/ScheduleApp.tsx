@@ -43,6 +43,7 @@ import {
   HEADER_MAX_HEIGHT,
   HEADER_MIN_HEIGHT,
   HEADER_TITLE_ZONE,
+  pageSidePadding,
   TIMELINE_VIEW_STORAGE_KEY,
 } from './constants';
 import {
@@ -79,6 +80,14 @@ export default function ScheduleApp() {
   } = useContext(ThemeContext);
   const insets = useSafeAreaInsets();
   const { width: windowWidth } = useWindowDimensions();
+  const sidePadding = pageSidePadding(windowWidth);
+  const isPadded = sidePadding > 0;
+  // The timelines size their columns from this: the window minus the page
+  // padding and, when framed, the frame's 1px side borders.
+  const timelineViewportWidth = Math.max(
+    0,
+    windowWidth - sidePadding * 2 - (isPadded ? 2 : 0)
+  );
   // Not awaited: the meme caption renders in a bold system font until Anton
   // is ready, so a slow font load never blocks the schedule.
   const [memeFontLoaded] = useFonts({ Anton_400Regular });
@@ -526,171 +535,180 @@ export default function ScheduleApp() {
           </View>
         </View>
 
-        <View style={styles.searchRow}>
-          <TextInput
-            value={query}
-            onChangeText={setQuery}
-            placeholder="Search rink, location, or activity"
-            placeholderTextColor={UI.textMuted}
-            style={styles.search}
-            autoCapitalize="none"
-            autoCorrect={false}
-            accessibilityLabel="Search rink, location, or activity"
-          />
-
-          <Pressable
-            style={styles.filterButton}
-            onPress={() => setFiltersVisible(true)}
-            accessibilityRole="button"
-            accessibilityLabel="Open filters">
-            <Ionicons
-              name="options-outline"
-              size={17}
-              color={UI.textPrimary}
+        <View style={[styles.pageBody, { paddingHorizontal: sidePadding }]}>
+          <View style={styles.searchRow}>
+            <TextInput
+              value={query}
+              onChangeText={setQuery}
+              placeholder="Search rink, location, or activity"
+              placeholderTextColor={UI.textMuted}
+              style={styles.search}
+              autoCapitalize="none"
+              autoCorrect={false}
+              accessibilityLabel="Search rink, location, or activity"
             />
-            <Text style={styles.filterButtonText}>Filters</Text>
-            {activeFilterCount > 0 ? (
-              <View style={styles.filterBadge}>
-                <Text style={styles.filterBadgeText}>{activeFilterCount}</Text>
-              </View>
-            ) : null}
-          </Pressable>
-        </View>
 
-        <View style={styles.dateNavigator}>
-          <Pressable
-            disabled={!previousDate}
-            onPress={() => previousDate && setSelectedDate(previousDate)}
-            accessibilityRole="button"
-            accessibilityLabel="Previous day"
-            accessibilityState={{ disabled: !previousDate }}
-            style={[
-              styles.dateNavButton,
-              !previousDate && styles.dateNavButtonDisabled,
-            ]}>
-            <Text style={styles.dateNavArrow}>‹</Text>
-            <Text style={styles.dateNavText} numberOfLines={1}>
-              {previousDate ? formatDate(previousDate) : 'Start'}
-            </Text>
-          </Pressable>
-
-          <Pressable
-            style={styles.selectedDatePanel}
-            onPress={() => setDatePickerVisible(true)}
-            accessibilityRole="button"
-            accessibilityLabel={`${formatDate(selectedDate)}. Choose a date`}>
-            <View style={styles.selectedDateDayRow}>
+            <Pressable
+              style={styles.filterButton}
+              onPress={() => setFiltersVisible(true)}
+              accessibilityRole="button"
+              accessibilityLabel="Open filters">
               <Ionicons
-                name="calendar-outline"
-                size={11}
-                color={UI.accentText}
+                name="options-outline"
+                size={17}
+                color={UI.textPrimary}
               />
-              <Text style={styles.selectedDateDay} numberOfLines={1}>
-                {dateDayMap[selectedDate] || 'Schedule'}
+              <Text style={styles.filterButtonText}>Filters</Text>
+              {activeFilterCount > 0 ? (
+                <View style={styles.filterBadge}>
+                  <Text style={styles.filterBadgeText}>{activeFilterCount}</Text>
+                </View>
+              ) : null}
+            </Pressable>
+          </View>
+
+          <View style={styles.dateNavigator}>
+            <Pressable
+              disabled={!previousDate}
+              onPress={() => previousDate && setSelectedDate(previousDate)}
+              accessibilityRole="button"
+              accessibilityLabel="Previous day"
+              accessibilityState={{ disabled: !previousDate }}
+              style={[
+                styles.dateNavButton,
+                !previousDate && styles.dateNavButtonDisabled,
+              ]}>
+              <Text style={styles.dateNavArrow}>‹</Text>
+              <Text style={styles.dateNavText} numberOfLines={1}>
+                {previousDate ? formatDate(previousDate) : 'Start'}
               </Text>
-            </View>
-            <Text style={styles.selectedDateText}>
-              {formatDate(selectedDate)}
-            </Text>
-            {isToday ? (
-              <Text style={styles.selectedDateToday}>Today</Text>
-            ) : null}
-          </Pressable>
+            </Pressable>
 
-          <Pressable
-            disabled={!nextDate}
-            onPress={() => nextDate && setSelectedDate(nextDate)}
-            accessibilityRole="button"
-            accessibilityLabel="Next day"
-            accessibilityState={{ disabled: !nextDate }}
-            style={[
-              styles.dateNavButton,
-              !nextDate && styles.dateNavButtonDisabled,
-            ]}>
-            <Text style={styles.dateNavArrow}>›</Text>
-            <Text style={styles.dateNavText} numberOfLines={1}>
-              {nextDate ? formatDate(nextDate) : 'End'}
-            </Text>
-          </Pressable>
+            <Pressable
+              style={styles.selectedDatePanel}
+              onPress={() => setDatePickerVisible(true)}
+              accessibilityRole="button"
+              accessibilityLabel={`${formatDate(selectedDate)}. Choose a date`}>
+              <View style={styles.selectedDateDayRow}>
+                <Ionicons
+                  name="calendar-outline"
+                  size={11}
+                  color={UI.accentText}
+                />
+                <Text style={styles.selectedDateDay} numberOfLines={1}>
+                  {dateDayMap[selectedDate] || 'Schedule'}
+                </Text>
+              </View>
+              <Text style={styles.selectedDateText}>
+                {formatDate(selectedDate)}
+              </Text>
+              {isToday ? (
+                <Text style={styles.selectedDateToday}>Today</Text>
+              ) : null}
+            </Pressable>
 
-          <Pressable
-            disabled={isToday}
-            onPress={() => setSelectedDate(today)}
-            accessibilityRole="button"
-            accessibilityLabel="Jump to today"
-            accessibilityState={{ disabled: isToday }}
-            style={[
-              styles.todayButton,
-              isToday && styles.dateNavButtonDisabled,
-            ]}>
-            <Ionicons
-              name="today-outline"
-              size={19}
-              color={UI.victoryGreen}
-            />
-            <Text style={styles.todayButtonText}>Today</Text>
-          </Pressable>
-        </View>
+            <Pressable
+              disabled={!nextDate}
+              onPress={() => nextDate && setSelectedDate(nextDate)}
+              accessibilityRole="button"
+              accessibilityLabel="Next day"
+              accessibilityState={{ disabled: !nextDate }}
+              style={[
+                styles.dateNavButton,
+                !nextDate && styles.dateNavButtonDisabled,
+              ]}>
+              <Text style={styles.dateNavArrow}>›</Text>
+              <Text style={styles.dateNavText} numberOfLines={1}>
+                {nextDate ? formatDate(nextDate) : 'End'}
+              </Text>
+            </Pressable>
 
-        {filteredSessions.length === 0 ? (
-          <View style={styles.emptyState}>
-            <View
-              style={styles.memePanel}
-              accessible
-              accessibilityLabel={
-                activeFilterCount > 0 || query
-                  ? 'No matching sessions. Try another date or adjust your filters.'
-                  : 'No sessions on this date. Try another date.'
-              }>
-              <Image
-                source={EMPTY_STATE_IMAGE}
-                resizeMode="cover"
-                style={styles.memeImage}
-                accessibilityIgnoresInvertColors
+            <Pressable
+              disabled={isToday}
+              onPress={() => setSelectedDate(today)}
+              accessibilityRole="button"
+              accessibilityLabel="Jump to today"
+              accessibilityState={{ disabled: isToday }}
+              style={[
+                styles.todayButton,
+                isToday && styles.dateNavButtonDisabled,
+              ]}>
+              <Ionicons
+                name="today-outline"
+                size={19}
+                color={UI.victoryGreen}
               />
-              <MemeCaption
-                text="No matching sessions"
-                fontFamily={memeFontLoaded ? 'Anton_400Regular' : undefined}
-              />
-              <MemeCaption
-                text="Try another date or adjust your filters"
-                fontFamily={memeFontLoaded ? 'Anton_400Regular' : undefined}
-              />
-            </View>
-            {activeFilterCount > 0 || query ? (
-              <View style={{ marginTop: 16 }}>
-                <SecondaryButton
-                  label="Reset filters"
-                  onPress={() => {
-                    resetFilters();
-                    setQuery('');
-                  }}
+              <Text style={styles.todayButtonText}>Today</Text>
+            </Pressable>
+          </View>
+
+          {filteredSessions.length === 0 ? (
+            <View style={styles.emptyState}>
+              <View
+                style={styles.memePanel}
+                accessible
+                accessibilityLabel={
+                  activeFilterCount > 0 || query
+                    ? 'No matching sessions. Try another date or adjust your filters.'
+                    : 'No sessions on this date. Try another date.'
+                }>
+                <Image
+                  source={EMPTY_STATE_IMAGE}
+                  resizeMode="cover"
+                  style={styles.memeImage}
+                  accessibilityIgnoresInvertColors
+                />
+                <MemeCaption
+                  text="No matching sessions"
+                  fontFamily={memeFontLoaded ? 'Anton_400Regular' : undefined}
+                />
+                <MemeCaption
+                  text="Try another date or adjust your filters"
+                  fontFamily={memeFontLoaded ? 'Anton_400Regular' : undefined}
                 />
               </View>
-            ) : null}
-          </View>
-        ) : timelineView === 'vertical' ? (
-          <VerticalTimeline
-            // Remount per day so each date starts scrolled to the top-left
-            // instead of keeping the previous day's (different) columns offset.
-            key={selectedDate}
-            sessions={filteredSessions}
-            nowDateTime={nowDateTime}
-            viewportWidth={windowWidth}
-            onSelectSession={setSelectedSession}
-          />
-        ) : (
-          <HorizontalTimeline
-            // Remount per day: each date starts at the top, centered on the
-            // current time for today and at the start of the day otherwise.
-            key={selectedDate}
-            sessions={filteredSessions}
-            isToday={isToday}
-            currentMinutes={currentMinutes}
-            viewportWidth={windowWidth}
-            onSelectSession={setSelectedSession}
-          />
-        )}
+              {activeFilterCount > 0 || query ? (
+                <View style={{ marginTop: 16 }}>
+                  <SecondaryButton
+                    label="Reset filters"
+                    onPress={() => {
+                      resetFilters();
+                      setQuery('');
+                    }}
+                  />
+                </View>
+              ) : null}
+            </View>
+          ) : (
+            // On padded (wider) layouts the timeline gets a thin rounded frame.
+            <View style={[styles.timelineArea, isPadded && styles.timelineAreaFramed]}>
+              {timelineView === 'vertical' ? (
+                <VerticalTimeline
+                  // Remount per day so each date starts scrolled to the
+                  // top-left instead of keeping the previous day's (different)
+                  // columns offset.
+                  key={selectedDate}
+                  sessions={filteredSessions}
+                  nowDateTime={nowDateTime}
+                  viewportWidth={timelineViewportWidth}
+                  onSelectSession={setSelectedSession}
+                />
+              ) : (
+                <HorizontalTimeline
+                  // Remount per day: each date starts at the top, centered on
+                  // the current time for today and at the start of the day
+                  // otherwise.
+                  key={selectedDate}
+                  sessions={filteredSessions}
+                  isToday={isToday}
+                  currentMinutes={currentMinutes}
+                  viewportWidth={timelineViewportWidth}
+                  onSelectSession={setSelectedSession}
+                />
+              )}
+            </View>
+          )}
+        </View>
       </View>
 
       <DatePickerModal

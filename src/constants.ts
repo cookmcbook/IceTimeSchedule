@@ -25,6 +25,15 @@ export const HEADER_FADE_FRACTION = 0.55;
 export const HEADER_TITLE_ZONE = 300;
 export const HEADER_FADE_ALPHAS = [1, 0.92, 0.72, 0.45, 0.2, 0.06, 0] as const;
 
+// Side padding for everything below the header photo. Phones stay
+// edge-to-edge so the timeline gets every pixel; wider screens get room
+// to breathe.
+export function pageSidePadding(windowWidth: number): number {
+  if (windowWidth >= 1024) return 32;
+  if (windowWidth >= 640) return 20;
+  return 0;
+}
+
 export const CONTROL_HEIGHT = 44;
 export const MIN_TAP_TARGET = 44;
 

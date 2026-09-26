@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useMemo } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useRef } from 'react';
 import { Animated, Platform, Pressable, ScrollView, Text, View } from 'react-native';
 
 import {
@@ -14,6 +14,7 @@ import { ThemeContext } from '../theme/ThemeContext';
 import type { Session } from '../types';
 import { activityColor } from '../utils/colors';
 import { clockParts, minutesFromMidnight } from '../utils/dates';
+import { MoreHint, type MoreHintHandle } from './MoreHint';
 
 // ---------------------------------------------------------------------------
 // VERTICAL TIMELINE
@@ -172,12 +173,89 @@ export function VerticalTimeline({
       (Math.max(1, Math.floor(gridViewportWidth / VT_MIN_COLUMN_WIDTH)) + 0.5);
   const gridWidth = columnWidth * columns.length;
 
+  // ----- "N more ›" hint: rink columns still (partly) off the right edge.
+  const hintRef = useRef<MoreHintHandle>(null);
+  const webScrollRef = useRef<View>(null);
+  const webHeaderRowRef = useRef<View>(null);
+  const nativeGridRef = useRef<ScrollView>(null);
+  const nativeOffsetX = useRef(0);
+
+  const hiddenRightAt = useCallback(
+    (x: number) =>
+      Math.max(0, columns.length - Math.floor((x + gridViewportWidth + 1) / columnWidth)),
+    [columns.length, gridViewportWidth, columnWidth]
+  );
+
+  // Web: an IntersectionObserver on the header cells reports when a column
+  // enters or leaves view, so nothing runs per scroll frame and the pill
+  // only re-renders when the count changes.
+  useEffect(() => {
+    if (!IS_WEB || typeof IntersectionObserver === 'undefined') return;
+    const root = webScrollRef.current as unknown as HTMLElement | null;
+    const headerRow = webHeaderRowRef.current as unknown as HTMLElement | null;
+    if (!root || !headerRow) return;
+
+    const hidden = new Set<Element>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const bounds = entry.rootBounds;
+          const offRight =
+            !!bounds &&
+            entry.intersectionRatio < 0.99 &&
+            entry.boundingClientRect.right > bounds.right + 1;
+          if (offRight) hidden.add(entry.target);
+          else hidden.delete(entry.target);
+        }
+        hintRef.current?.setCount(hidden.size);
+      },
+      { root, threshold: [0, 0.5, 0.99, 1] }
+    );
+    // The first child is the pinned TIME corner; the rest are rink columns.
+    Array.from(headerRow.children)
+      .slice(1)
+      .forEach((cell) => observer.observe(cell));
+    return () => observer.disconnect();
+  }, [columns, columnWidth]);
+
+  // Native: counted from the scroll listener; setCount is a no-op unless
+  // the number changes.
+  const handleNativeOffset = useCallback(
+    (x: number) => {
+      nativeOffsetX.current = x;
+      hintRef.current?.setCount(hiddenRightAt(x));
+    },
+    [hiddenRightAt]
+  );
+  useEffect(() => {
+    if (!IS_WEB) hintRef.current?.setCount(hiddenRightAt(nativeOffsetX.current));
+  }, [hiddenRightAt]);
+
+  // Scrolls to the next column boundary.
+  const scrollToNextColumn = useCallback(() => {
+    const nextBoundary = (x: number) =>
+      (Math.floor((x + 1) / columnWidth) + 1) * columnWidth;
+    if (IS_WEB) {
+      const root = webScrollRef.current as unknown as HTMLElement | null;
+      if (!root) return;
+      root.scrollTo({
+        left: Math.min(root.scrollWidth - root.clientWidth, nextBoundary(root.scrollLeft)),
+        behavior: 'smooth',
+      });
+    } else {
+      nativeGridRef.current?.scrollTo({
+        x: Math.min(Math.max(0, gridWidth - gridViewportWidth), nextBoundary(nativeOffsetX.current)),
+        animated: true,
+      });
+    }
+  }, [columnWidth, gridWidth, gridViewportWidth]);
+
   // Native only (see the web branch below for why web doesn't use it).
   const {
     onScroll: handleNativeScroll,
     trackRef: nativeHeaderTrackRef,
     trackStyle: nativeHeaderTrackStyle,
-  } = useScrollSyncedHeader();
+  } = useScrollSyncedHeader(IS_WEB ? undefined : handleNativeOffset);
 
   if (rows.length === 0) {
     return (
@@ -261,9 +339,10 @@ export function VerticalTimeline({
     const contentWidth = VT_TIME_COLUMN_WIDTH + gridWidth;
     return (
       <View style={styles.timelineContainer}>
-        <View style={styles.webScrollBoth}>
+        <View ref={webScrollRef} style={styles.webScrollBoth}>
           <View style={{ width: contentWidth }}>
             <View
+              ref={webHeaderRowRef}
               style={[
                 styles.vtHeaderRow,
                 styles.vtHeaderRowDivider,
@@ -281,6 +360,7 @@ export function VerticalTimeline({
             </View>
           </View>
         </View>
+        <MoreHint ref={hintRef} direction="right" onPress={scrollToNextColumn} />
       </View>
     );
   }
@@ -304,6 +384,7 @@ export function VerticalTimeline({
         <View style={styles.vtBody}>
           <View style={styles.vtTimeColumn}>{timeCells}</View>
           <Animated.ScrollView
+            ref={nativeGridRef}
             horizontal
             nestedScrollEnabled
             showsHorizontalScrollIndicator
@@ -315,6 +396,7 @@ export function VerticalTimeline({
           </Animated.ScrollView>
         </View>
       </ScrollView>
+      <MoreHint ref={hintRef} direction="right" onPress={scrollToNextColumn} />
     </View>
   );
 }

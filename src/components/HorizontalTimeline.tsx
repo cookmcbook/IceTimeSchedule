@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Animated, Platform, ScrollView, Text, View } from 'react-native';
 
 import { HEADER_HEIGHT, HOUR_WIDTH, LABEL_WIDTH } from '../constants';
@@ -7,6 +7,7 @@ import { ThemeContext } from '../theme/ThemeContext';
 import type { Session } from '../types';
 import { hourLabel } from '../utils/dates';
 import { buildLane } from '../utils/lanes';
+import { MoreHint, type MoreHintHandle } from './MoreHint';
 import { LaneLabelRow, LaneRow, TimelineBackground } from './Timeline';
 
 const FIRST_HOUR = 5;
@@ -99,6 +100,83 @@ export function HorizontalTimeline({
     trackRef: nativeHeaderTrackRef,
     trackStyle: nativeHeaderTrackStyle,
   } = useScrollSyncedHeader();
+
+  // ----- "N more ⌄" hint: rink lanes still (partly) below the visible area.
+  const hintRef = useRef<MoreHintHandle>(null);
+  const webLabelColumnRef = useRef<View>(null);
+  const nativeVerticalRef = useRef<ScrollView>(null);
+  const nativeScrollY = useRef(0);
+  const nativeViewportHeight = useRef(0);
+  const laneBottoms = useMemo(() => {
+    let total = 0;
+    return lanes.map((lane) => (total += lane.height));
+  }, [lanes]);
+
+  // Web: an IntersectionObserver on the location labels reports when a lane
+  // enters or leaves view, so nothing runs per scroll frame and the pill
+  // only re-renders when the count changes.
+  useEffect(() => {
+    if (!IS_WEB || typeof IntersectionObserver === 'undefined') return;
+    const root = webScrollRef.current as unknown as HTMLElement | null;
+    const labelColumn = webLabelColumnRef.current as unknown as HTMLElement | null;
+    if (!root || !labelColumn) return;
+
+    const hidden = new Set<Element>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const bounds = entry.rootBounds;
+          const below =
+            !!bounds &&
+            entry.intersectionRatio < 0.99 &&
+            entry.boundingClientRect.bottom > bounds.bottom + 1;
+          if (below) hidden.add(entry.target);
+          else hidden.delete(entry.target);
+        }
+        hintRef.current?.setCount(hidden.size);
+      },
+      { root, threshold: [0, 0.5, 0.99, 1] }
+    );
+    Array.from(labelColumn.children).forEach((label) => observer.observe(label));
+    return () => observer.disconnect();
+  }, [lanes]);
+
+  // Native: counted from the vertical scroll/layout; setCount is a no-op
+  // unless the number changes.
+  const updateNativeHidden = useCallback(() => {
+    if (nativeViewportHeight.current <= 0) return;
+    const visibleBottom = nativeScrollY.current + nativeViewportHeight.current + 1;
+    hintRef.current?.setCount(
+      laneBottoms.filter((bottom) => bottom > visibleBottom).length
+    );
+  }, [laneBottoms]);
+  useEffect(() => {
+    if (!IS_WEB) updateNativeHidden();
+  }, [updateNativeHidden]);
+
+  // Scrolls just far enough to bring the next partly hidden lane fully into
+  // view.
+  const scrollToNextLane = useCallback(() => {
+    if (IS_WEB) {
+      const root = webScrollRef.current as unknown as HTMLElement | null;
+      const labelColumn = webLabelColumnRef.current as unknown as HTMLElement | null;
+      if (!root || !labelColumn) return;
+      // clientHeight excludes a horizontal scrollbar, if one is showing.
+      const visibleBottom = root.getBoundingClientRect().top + root.clientHeight;
+      const next = Array.from(labelColumn.children)
+        .map((label) => label.getBoundingClientRect())
+        .find((rect) => rect.bottom > visibleBottom + 1);
+      if (next) root.scrollBy({ top: next.bottom - visibleBottom, behavior: 'smooth' });
+    } else {
+      const visibleBottom = nativeScrollY.current + nativeViewportHeight.current + 1;
+      const nextBottom = laneBottoms.find((bottom) => bottom > visibleBottom);
+      if (nextBottom === undefined) return;
+      nativeVerticalRef.current?.scrollTo({
+        y: Math.max(0, nextBottom - nativeViewportHeight.current),
+        animated: true,
+      });
+    }
+  }, [laneBottoms]);
 
   const hourLabels = Array.from(
     { length: LAST_HOUR - FIRST_HOUR + 1 },
@@ -200,13 +278,16 @@ export function HorizontalTimeline({
             </View>
 
             <View style={styles.timelineFrame}>
-              <View style={[styles.labelColumn, styles.webStickyLeft]}>
+              <View
+                ref={webLabelColumnRef}
+                style={[styles.labelColumn, styles.webStickyLeft]}>
                 {laneLabels}
               </View>
               {grid}
             </View>
           </View>
         </View>
+        <MoreHint ref={hintRef} direction="down" onPress={scrollToNextLane} />
       </View>
     );
   }
@@ -240,9 +321,19 @@ export function HorizontalTimeline({
       </View>
 
       <ScrollView
+        ref={nativeVerticalRef}
         style={styles.verticalTimeline}
         contentContainerStyle={styles.verticalTimelineContent}
-        nestedScrollEnabled>
+        nestedScrollEnabled
+        onLayout={(event) => {
+          nativeViewportHeight.current = event.nativeEvent.layout.height;
+          updateNativeHidden();
+        }}
+        onScroll={(event) => {
+          nativeScrollY.current = event.nativeEvent.contentOffset.y;
+          updateNativeHidden();
+        }}
+        scrollEventThrottle={16}>
         <View style={styles.timelineFrame}>
           <View style={styles.labelColumn}>{laneLabels}</View>
 
@@ -260,6 +351,7 @@ export function HorizontalTimeline({
           </Animated.ScrollView>
         </View>
       </ScrollView>
+      <MoreHint ref={hintRef} direction="down" onPress={scrollToNextLane} />
     </View>
   );
 }
