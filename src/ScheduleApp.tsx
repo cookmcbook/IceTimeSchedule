@@ -3,17 +3,12 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useRef,
   useState,
 } from 'react';
 import {
-  Animated,
   Image,
-  Platform,
   Pressable,
-  ScrollView,
   Share,
-  StyleSheet,
   Text,
   TextInput,
   useWindowDimensions,
@@ -38,23 +33,16 @@ import { DatePickerModal } from './components/DatePickerModal';
 import { FilterModal } from './components/FilterModal';
 import { MemeCaption } from './components/MemeCaption';
 import { SessionDetailModal } from './components/SessionDetailModal';
-import {
-  LaneLabelRow,
-  LaneRow,
-  TimelineBackground,
-} from './components/Timeline';
+import { HorizontalTimeline } from './components/HorizontalTimeline';
 import { VerticalTimeline } from './components/VerticalTimeline';
 import {
   ACTIVITY_GROUPS,
   FILTER_STORAGE_KEY,
   HEADER_FADE_ALPHAS,
   HEADER_FADE_FRACTION,
-  HEADER_HEIGHT,
   HEADER_MAX_HEIGHT,
   HEADER_MIN_HEIGHT,
   HEADER_TITLE_ZONE,
-  HOUR_WIDTH,
-  LABEL_WIDTH,
   TIMELINE_VIEW_STORAGE_KEY,
 } from './constants';
 import {
@@ -67,8 +55,7 @@ import {
 import { ThemeContext } from './theme/ThemeContext';
 import type { RawScheduleData, Session } from './types';
 import { withAlpha } from './utils/colors';
-import { formatDate, hourLabel, localDateKey } from './utils/dates';
-import { buildLane } from './utils/lanes';
+import { formatDate, localDateKey } from './utils/dates';
 import { openDirectionsForAddress } from './utils/links';
 
 // Cropped and compressed from the Unsplash originals in the project root
@@ -95,13 +82,7 @@ export default function ScheduleApp() {
   // Not awaited: the meme caption renders in a bold system font until Anton
   // is ready, so a slow font load never blocks the schedule.
   const [memeFontLoaded] = useFonts({ Anton_400Regular });
-  const timelineScrollRef = useRef<ScrollView>(null);
-  // The grid's horizontal offset, fed straight from its onScroll event. The
-  // hour-label header translates by it, so the two stay in sync without a
-  // JS round trip per frame on native (useNativeDriver) or a re-render.
-  const timelineScrollX = useRef(new Animated.Value(0)).current;
   const [now, setNow] = useState(() => new Date());
-  const [timelineViewportWidth, setTimelineViewportWidth] = useState(0);
 
   const sessions = useMemo(() => {
     const scheduleUrls = scheduleUrlsFromData(scheduleData as RawScheduleData);
@@ -446,19 +427,6 @@ export default function ScheduleApp() {
     });
   }, [sessionsByDate, selectedDate, selectedLocations, selectedActivities, query]);
 
-  const lanes = useMemo(() => {
-    const groups = new Map<string, Session[]>();
-    for (const session of filteredSessions) {
-      const existing = groups.get(session.Location);
-      if (existing) existing.push(session);
-      else groups.set(session.Location, [session]);
-    }
-
-    return [...groups.entries()]
-      .map(([key, laneSessions]) => buildLane(key, laneSessions))
-      .sort((a, b) => a.location.localeCompare(b.location));
-  }, [filteredSessions]);
-
   const isToday = selectedDate === today;
   const currentMinutes = now.getHours() * 60 + now.getMinutes();
   // Same 'YYYY-MM-DDTHH:MM:00' shape as Session.StartDateTime, so the
@@ -469,9 +437,6 @@ export default function ScheduleApp() {
       ).padStart(2, '0')}:00`
     : null;
 
-  const firstHour = 5;
-  const lastHour = 24;
-
   const selectedDateIndex = dates.indexOf(selectedDate);
   const previousDate =
     selectedDateIndex > 0 ? dates[selectedDateIndex - 1] : undefined;
@@ -479,86 +444,6 @@ export default function ScheduleApp() {
     selectedDateIndex >= 0 && selectedDateIndex < dates.length - 1
       ? dates[selectedDateIndex + 1]
       : undefined;
-  const timelineWidth = (lastHour - firstHour) * HOUR_WIDTH;
-  const visibleTimelineWidth = Math.max(0, windowWidth - LABEL_WIDTH);
-  const timelineHeight = lanes.reduce((total, lane) => total + lane.height, 0);
-  const currentTimeLeft = ((currentMinutes - firstHour * 60) / 60) * HOUR_WIDTH;
-
-  useEffect(() => {
-    if (timelineViewportWidth <= 0) return;
-
-    const frame = requestAnimationFrame(() => {
-      if (!isToday) {
-        timelineScrollRef.current?.scrollTo({ x: 0, animated: false });
-        return;
-      }
-
-      const maximumScroll = Math.max(0, timelineWidth - timelineViewportWidth);
-      const centeredPosition = currentTimeLeft - timelineViewportWidth / 2;
-      const x = Math.max(0, Math.min(maximumScroll, centeredPosition));
-      timelineScrollRef.current?.scrollTo({ x, animated: false });
-    });
-
-    return () => cancelAnimationFrame(frame);
-    // Re-center when the selected date, viewport, or view changes (switching
-    // back to horizontal remounts the grid at x=0). The minute timer moves the
-    // red line without repeatedly taking scrolling away from users.
-  }, [
-    selectedDate,
-    isToday,
-    timelineViewportWidth,
-    firstHour,
-    timelineWidth,
-    timelineView,
-  ]);
-
-  // Keeps the hour-label header locked to the grid's horizontal offset. The
-  // grid's scroll events (user or programmatic scrollTo) are the only input,
-  // so header and grid can never end up desynced. The native driver isn't
-  // available on web, where Animated updates the style directly instead.
-  const handleTimelineScroll = useMemo(
-    () =>
-      Animated.event(
-        [{ nativeEvent: { contentOffset: { x: timelineScrollX } } }],
-        { useNativeDriver: Platform.OS !== 'web' }
-      ),
-    [timelineScrollX]
-  );
-  const timelineHeaderTranslate = useMemo(
-    () => Animated.multiply(timelineScrollX, -1),
-    [timelineScrollX]
-  );
-
-  // "N more ⌄" hint for the horizontal view: counts rink lanes that are
-  // still (partly) below the visible area. Like the vertical view's hint, it
-  // only sets state when the count changes, not on every scroll frame.
-  const laneScrollRef = useRef<ScrollView>(null);
-  const laneScrollY = useRef(0);
-  const laneViewportHeight = useRef(0);
-  const [hiddenLanes, setHiddenLanes] = useState(0);
-  const laneBottoms = useMemo(() => {
-    let total = 0;
-    return lanes.map((lane) => (total += lane.height));
-  }, [lanes]);
-  const updateHiddenLanes = useCallback(() => {
-    if (laneViewportHeight.current <= 0) return;
-    const visibleBottom = laneScrollY.current + laneViewportHeight.current + 1;
-    const next = laneBottoms.filter((bottom) => bottom > visibleBottom).length;
-    setHiddenLanes((current) => (current === next ? current : next));
-  }, [laneBottoms]);
-  useEffect(updateHiddenLanes, [updateHiddenLanes]);
-
-  // Scrolls just far enough to bring the next partly hidden lane fully into
-  // view.
-  const scrollToNextLane = useCallback(() => {
-    const visibleBottom = laneScrollY.current + laneViewportHeight.current + 1;
-    const nextBottom = laneBottoms.find((bottom) => bottom > visibleBottom);
-    if (nextBottom === undefined) return;
-    laneScrollRef.current?.scrollTo({
-      y: Math.max(0, nextBottom - laneViewportHeight.current),
-      animated: true,
-    });
-  }, [laneBottoms]);
 
   return (
     // Pads every edge by the device's safe-area insets (notch, Dynamic Island,
@@ -795,171 +680,16 @@ export default function ScheduleApp() {
             onSelectSession={setSelectedSession}
           />
         ) : (
-          <View style={styles.timelineContainer}>
-            <View style={styles.timelineHeaderRow}>
-              <View
-                style={[
-                  styles.labelHeader,
-                  { width: LABEL_WIDTH, height: HEADER_HEIGHT },
-                ]}>
-                <Text style={styles.labelHeaderText}>LOCATION</Text>
-              </View>
-
-              {/* Not user-scrollable: a clipped window whose content is
-                  translated by the grid's scroll offset (handleTimelineScroll
-                  below), so it always tracks the grid. */}
-              <View
-                style={[
-                  styles.timelineScroller,
-                  styles.timeHeaderViewport,
-                  { width: visibleTimelineWidth },
-                ]}>
-                <Animated.View
-                  style={[
-                    styles.timeHeader,
-                    {
-                      height: HEADER_HEIGHT,
-                      width: timelineWidth,
-                      transform: [{ translateX: timelineHeaderTranslate }],
-                    },
-                  ]}>
-                  {Array.from(
-                    { length: lastHour - firstHour + 1 },
-                    (_, index) => firstHour + index
-                  ).map((hour) => (
-                    <View
-                      key={hour}
-                      style={[
-                        styles.hourLabel,
-                        { left: (hour - firstHour) * HOUR_WIDTH },
-                      ]}>
-                      <Text style={styles.hourLabelText}>
-                        {hourLabel(hour)}
-                      </Text>
-                    </View>
-                  ))}
-                </Animated.View>
-              </View>
-            </View>
-
-            <ScrollView
-              ref={laneScrollRef}
-              style={styles.verticalTimeline}
-              contentContainerStyle={styles.verticalTimelineContent}
-              nestedScrollEnabled
-              onLayout={(event) => {
-                laneViewportHeight.current = event.nativeEvent.layout.height;
-                updateHiddenLanes();
-              }}
-              onScroll={(event) => {
-                laneScrollY.current = event.nativeEvent.contentOffset.y;
-                updateHiddenLanes();
-              }}
-              scrollEventThrottle={16}>
-              <View style={styles.timelineFrame}>
-                <View style={styles.labelColumn}>
-                  {lanes.map((lane, index) => (
-                    <LaneLabelRow
-                      key={lane.key}
-                      lane={lane}
-                      alt={index % 2 === 1}
-                    />
-                  ))}
-                </View>
-
-                <Animated.ScrollView
-                  ref={timelineScrollRef}
-                  horizontal
-                  nestedScrollEnabled
-                  showsHorizontalScrollIndicator
-                  style={[
-                    styles.timelineScroller,
-                    { width: visibleTimelineWidth },
-                  ]}
-                  contentContainerStyle={{ width: timelineWidth }}
-                  onLayout={(event) =>
-                    setTimelineViewportWidth(event.nativeEvent.layout.width)
-                  }
-                  onScroll={handleTimelineScroll}
-                  scrollEventThrottle={16}>
-                  <View style={{ width: timelineWidth }}>
-                    <TimelineBackground
-                      lanes={lanes}
-                      hourCount={lastHour - firstHour + 1}
-                    />
-                    {lanes.map((lane) => (
-                      <LaneRow
-                        key={lane.key}
-                        lane={lane}
-                        firstHour={firstHour}
-                        lastHour={lastHour}
-                        timelineWidth={timelineWidth}
-                        onSelectSession={setSelectedSession}
-                      />
-                    ))}
-
-                    {/* "Now" indicator: a vertical line spanning every lane
-                        (height=timelineHeight covers the full stacked grid),
-                        with a colored dot at the top. Green while today's
-                        sessions are still ahead/in progress, red once the
-                        visible schedule for today has fully elapsed. */}
-                    {isToday &&
-                      currentTimeLeft >= 0 &&
-                      currentTimeLeft <= timelineWidth ? (
-                      <View
-                        style={[
-                          styles.currentTimeLine,
-                          {
-                            left: currentTimeLeft,
-                            height: timelineHeight,
-                            backgroundColor:
-                              currentTimeLeft >= timelineWidth - HOUR_WIDTH
-                                ? UI.textMuted
-                                : styles.currentTimeLine.backgroundColor,
-                            pointerEvents: 'none',
-                          },
-                        ]}>
-                        <View
-                          style={[
-                            styles.currentTimeDot,
-                            {
-                              backgroundColor:
-                                currentTimeLeft >= timelineWidth - HOUR_WIDTH
-                                  ? UI.textMuted
-                                  : styles.currentTimeDot.backgroundColor,
-                            },
-                          ]}
-                        />
-                      </View>
-                    ) : null}
-                  </View>
-                </Animated.ScrollView>
-              </View>
-            </ScrollView>
-
-            {hiddenLanes > 0 ? (
-              <View style={styles.laneMoreHint} pointerEvents="box-none">
-                <LinearGradient
-                  pointerEvents="none"
-                  colors={[withAlpha(UI.surface, 0), UI.surface]}
-                  style={StyleSheet.absoluteFill}
-                />
-                <Pressable
-                  onPress={scrollToNextLane}
-                  hitSlop={8}
-                  accessibilityRole="button"
-                  accessibilityLabel={`Scroll to see ${hiddenLanes} more ${hiddenLanes === 1 ? 'rink' : 'rinks'}`}
-                  style={styles.vtMorePill}>
-                  <Text style={styles.vtMorePillText}>{hiddenLanes} more</Text>
-                  <Ionicons
-                    name="chevron-down"
-                    size={13}
-                    color={UI.accentText}
-                  />
-                </Pressable>
-              </View>
-            ) : null}
-          </View>
+          <HorizontalTimeline
+            // Remount per day: each date starts at the top, centered on the
+            // current time for today and at the start of the day otherwise.
+            key={selectedDate}
+            sessions={filteredSessions}
+            isToday={isToday}
+            currentMinutes={currentMinutes}
+            viewportWidth={windowWidth}
+            onSelectSession={setSelectedSession}
+          />
         )}
       </View>
 

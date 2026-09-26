@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, type ViewStyle } from 'react-native';
 
 import {
   CONTROL_HEIGHT,
@@ -15,6 +15,11 @@ import {
   VT_TIME_COLUMN_WIDTH,
 } from '../constants';
 import type { ThemeColors } from './colors';
+
+// Web-only CSS values (overflow: auto, position: sticky) that
+// react-native-web passes straight through but React Native's types don't
+// list. Only used by the web branches of the timelines.
+const webOnly = (style: Record<string, string | number>) => style as ViewStyle;
 
 // ---------------------------------------------------------------------------
 // STYLES
@@ -334,6 +339,30 @@ export function createStyles(UI: ThemeColors) {
       borderTopWidth: 1,
       borderColor: UI.borderSubtle,
     },
+    // Web timelines: one area that scrolls both ways, with the header row and
+    // left column pinned by position: sticky so the browser keeps them in
+    // place during scroll with no JavaScript. Pinned parts need opaque
+    // backgrounds, which their own styles already provide.
+    webScrollBoth: webOnly({
+      flex: 1,
+      overflow: 'auto',
+      overscrollBehavior: 'contain',
+    }),
+    webStickyTop: webOnly({
+      position: 'sticky',
+      top: 0,
+      zIndex: 3,
+    }),
+    webStickyLeft: webOnly({
+      position: 'sticky',
+      left: 0,
+      zIndex: 2,
+    }),
+    // Contains the grid's own z-order (e.g. the now line) beneath the pinned
+    // header and column.
+    gridStack: {
+      zIndex: 0,
+    },
     verticalTimeline: {
       flex: 1,
     },
@@ -385,19 +414,6 @@ export function createStyles(UI: ThemeColors) {
       paddingHorizontal: 10,
       borderBottomWidth: 1,
       borderBottomColor: UI.borderSubtle,
-    },
-    // "N more ⌄" pill at the bottom of the location column while rink lanes
-    // are still below the visible area; the gradient fades the names under it.
-    laneMoreHint: {
-      position: 'absolute',
-      left: 0,
-      bottom: 0,
-      width: LABEL_WIDTH,
-      height: 56,
-      alignItems: 'center',
-      justifyContent: 'flex-end',
-      paddingBottom: 10,
-      zIndex: 3,
     },
     laneLabelAlt: {
       backgroundColor: UI.timelineRowAlt,
@@ -493,6 +509,12 @@ export function createStyles(UI: ThemeColors) {
       width: VT_TIME_COLUMN_WIDTH,
       height: VT_HEADER_HEIGHT,
     },
+    // Web: the header row itself carries the divider (native draws it on
+    // vtHeaderViewport).
+    vtHeaderRowDivider: {
+      borderBottomWidth: 1,
+      borderBottomColor: UI.border,
+    },
     vtHeaderViewport: {
       flexGrow: 0,
       flexShrink: 0,
@@ -513,43 +535,6 @@ export function createStyles(UI: ThemeColors) {
     vtHeaderText: {
       color: UI.textPrimary,
       fontSize: 12,
-      fontWeight: '800',
-    },
-    // "N more ›" pill pinned to the header's right edge while rink columns
-    // are still off-screen; the fade softens the names sliding under it.
-    vtMoreHint: {
-      position: 'absolute',
-      top: 0,
-      right: 0,
-      bottom: 0,
-      flexDirection: 'row',
-      zIndex: 3,
-    },
-    vtMoreFade: {
-      width: 28,
-      height: '100%',
-    },
-    vtMorePillBacking: {
-      height: '100%',
-      justifyContent: 'center',
-      paddingRight: 8,
-      backgroundColor: UI.surfaceAlt,
-      borderBottomWidth: 1,
-      borderBottomColor: UI.border,
-    },
-    vtMorePill: {
-      height: 26,
-      paddingLeft: 10,
-      paddingRight: 6,
-      borderRadius: 13,
-      backgroundColor: UI.accent,
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: 2,
-    },
-    vtMorePillText: {
-      color: UI.accentText,
-      fontSize: 11,
       fontWeight: '800',
     },
     vtBody: {

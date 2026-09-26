@@ -1,13 +1,5 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-} from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
 import { Animated, Platform, Pressable, ScrollView, Text, View } from 'react-native';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { LinearGradient } from 'expo-linear-gradient';
 
 import {
   VT_CARD_GAP,
@@ -17,9 +9,10 @@ import {
   VT_ROW_PADDING,
   VT_TIME_COLUMN_WIDTH,
 } from '../constants';
+import { useScrollSyncedHeader } from '../hooks/useScrollSyncedHeader';
 import { ThemeContext } from '../theme/ThemeContext';
 import type { Session } from '../types';
-import { activityColor, withAlpha } from '../utils/colors';
+import { activityColor } from '../utils/colors';
 import { clockParts, minutesFromMidnight } from '../utils/dates';
 
 // ---------------------------------------------------------------------------
@@ -35,6 +28,7 @@ import { clockParts, minutesFromMidnight } from '../utils/dates';
 // ---------------------------------------------------------------------------
 
 const NOW_COLOR = '#FF4D4F';
+const IS_WEB = Platform.OS === 'web';
 
 type VerticalRow = {
   key: string;
@@ -126,7 +120,6 @@ export function VerticalTimeline({
   onSelectSession: (session: Session) => void;
 }) {
   const { styles, colors: UI } = useContext(ThemeContext);
-  const scrollX = useRef(new Animated.Value(0)).current;
 
   const rows = useMemo(() => {
     const result: VerticalRow[] = [];
@@ -178,49 +171,13 @@ export function VerticalTimeline({
     : gridViewportWidth /
       (Math.max(1, Math.floor(gridViewportWidth / VT_MIN_COLUMN_WIDTH)) + 0.5);
   const gridWidth = columnWidth * columns.length;
-  const maxScrollX = Math.max(0, gridWidth - gridViewportWidth);
 
-  const gridRef = useRef<ScrollView>(null);
-
-  // Header synchronization stays on the animation graph, with no JS listener
-  // or React state updates while the grid is scrolling.
-  const handleScroll = useMemo(
-    () =>
-      Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], {
-        useNativeDriver: Platform.OS !== 'web',
-      }),
-    [scrollX]
-  );
-  const headerTranslate = useMemo(() => Animated.multiply(scrollX, -1), [scrollX]);
-  const initialHiddenRight = Math.max(
-    0,
-    columns.length - Math.floor((gridViewportWidth + 1) / columnWidth)
-  );
-  const hiddenRightLabels = useMemo(
-    () => Array.from({ length: initialHiddenRight }, (_, index) => {
-      const count = initialHiddenRight - index;
-      const lower = (columns.length - count) * columnWidth - gridViewportWidth - 1;
-      const upper = lower + columnWidth;
-      const epsilon = Math.min(0.5, columnWidth / 100);
-      return {
-        count,
-        opacity: scrollX.interpolate({
-          inputRange: [lower - epsilon, lower, upper - epsilon, upper],
-          outputRange: [0, 1, 1, 0],
-          extrapolate: 'clamp',
-        }),
-      };
-    }),
-    [columnWidth, columns.length, gridViewportWidth, initialHiddenRight, scrollX]
-  );
-
-  // Advances to the next column boundary.
-  const scrollToNextColumn = useCallback(() => {
-    scrollX.stopAnimation((offset) => {
-      const next = (Math.floor((offset + 1) / columnWidth) + 1) * columnWidth;
-      gridRef.current?.scrollTo({ x: Math.min(maxScrollX, next), animated: true });
-    });
-  }, [columnWidth, maxScrollX, scrollX]);
+  // Native only (see the web branch below for why web doesn't use it).
+  const {
+    onScroll: handleNativeScroll,
+    trackRef: nativeHeaderTrackRef,
+    trackStyle: nativeHeaderTrackStyle,
+  } = useScrollSyncedHeader();
 
   if (rows.length === 0) {
     return (
@@ -233,125 +190,132 @@ export function VerticalTimeline({
     );
   }
 
+  const cornerCell = (
+    <Text style={styles.labelHeaderText}>TIME</Text>
+  );
+
+  const headerCells = columns.map((location) => (
+    <View key={location} style={[styles.vtHeaderCell, { width: columnWidth }]}>
+      <Text style={styles.vtHeaderText} numberOfLines={1}>
+        {location}
+      </Text>
+    </View>
+  ));
+
+  const timeCells = (
+    <>
+      <View style={[styles.vtLine, { left: VT_LINE_X - 1 }]} />
+      {rows.map((row) => {
+        const clock = clockParts(row.minutes);
+        return (
+          <View key={row.key} style={[styles.vtTimeCell, { height: row.height }]}>
+            <View style={styles.vtTimeLabel}>
+              <Text style={[styles.vtTimeText, row.isNow && { color: NOW_COLOR }]}>
+                {row.isNow ? 'Now' : clock.time}
+              </Text>
+              <Text style={styles.vtTimePeriod}>
+                {row.isNow ? `${clock.time} ${clock.period}` : clock.period}
+              </Text>
+            </View>
+            <View
+              style={[
+                styles.vtDot,
+                { left: VT_LINE_X - 6, backgroundColor: row.dotColor },
+              ]}
+            />
+          </View>
+        );
+      })}
+    </>
+  );
+
+  const grid = (
+    <View style={[styles.gridStack, { width: gridWidth }]}>
+      {rows.map((row) => (
+        <View
+          key={row.key}
+          style={[styles.vtRow, row.isNow && styles.vtRowNow, { height: row.height }]}>
+          {columns.map((location) => (
+            <View key={location} style={[styles.vtCell, { width: columnWidth }]}>
+              {(row.cells.get(location) ?? []).map((session) => (
+                <VerticalSessionCard
+                  key={`${session.EventId}-${session.Rink}-${session.StartDateTime}`}
+                  session={session}
+                  onPress={onSelectSession}
+                />
+              ))}
+            </View>
+          ))}
+        </View>
+      ))}
+    </View>
+  );
+
+  // Web: one area scrolling both ways, with the location header pinned by
+  // `position: sticky` to the top and the time column to the left. The
+  // browser keeps them in place on the compositor, so scrolling runs no
+  // JavaScript and repaints nothing. (Moving the header from a scroll handler
+  // instead repainted the whole screen on every scroll event, which
+  // stuttered on phones.)
+  if (IS_WEB) {
+    const contentWidth = VT_TIME_COLUMN_WIDTH + gridWidth;
+    return (
+      <View style={styles.timelineContainer}>
+        <View style={styles.webScrollBoth}>
+          <View style={{ width: contentWidth }}>
+            <View
+              style={[
+                styles.vtHeaderRow,
+                styles.vtHeaderRowDivider,
+                styles.webStickyTop,
+                { width: contentWidth },
+              ]}>
+              <View style={[styles.labelHeader, styles.vtCorner, styles.webStickyLeft]}>
+                {cornerCell}
+              </View>
+              {headerCells}
+            </View>
+            <View style={styles.vtBody}>
+              <View style={[styles.vtTimeColumn, styles.webStickyLeft]}>{timeCells}</View>
+              {grid}
+            </View>
+          </View>
+        </View>
+      </View>
+    );
+  }
+
+  // Native: a horizontal ScrollView nested in a vertical one, with the
+  // location header moved by a native-driver Animated transform.
   return (
     <View style={styles.timelineContainer}>
       <View style={styles.vtHeaderRow}>
-        <View style={[styles.labelHeader, styles.vtCorner]}>
-          <Text style={styles.labelHeaderText}>TIME</Text>
-        </View>
+        <View style={[styles.labelHeader, styles.vtCorner]}>{cornerCell}</View>
         <View style={[styles.vtHeaderViewport, { width: gridViewportWidth }]}>
           <Animated.View
-            style={[
-              styles.vtHeaderTrack,
-              { width: gridWidth, transform: [{ translateX: headerTranslate }] },
-            ]}>
-            {columns.map((location) => (
-              <View key={location} style={[styles.vtHeaderCell, { width: columnWidth }]}>
-                <Text style={styles.vtHeaderText} numberOfLines={1}>
-                  {location}
-                </Text>
-              </View>
-            ))}
+            ref={nativeHeaderTrackRef}
+            style={[styles.vtHeaderTrack, { width: gridWidth }, nativeHeaderTrackStyle]}>
+            {headerCells}
           </Animated.View>
         </View>
-
-        {initialHiddenRight > 0 ? (
-          <View style={styles.vtMoreHint}>
-            <LinearGradient
-              pointerEvents="none"
-              colors={[withAlpha(UI.surfaceAlt, 0), UI.surfaceAlt]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              style={styles.vtMoreFade}
-            />
-            <View style={styles.vtMorePillBacking}>
-              <Pressable
-                onPress={scrollToNextColumn}
-                hitSlop={8}
-                accessibilityRole="button"
-                accessibilityLabel="Scroll to see more rinks"
-                style={styles.vtMorePill}>
-                <View>
-                  <Text style={[styles.vtMorePillText, { opacity: 0 }]}>
-                    {initialHiddenRight} more
-                  </Text>
-                  {hiddenRightLabels.map(({ count, opacity }) => (
-                    <Animated.Text
-                      key={count}
-                      style={[styles.vtMorePillText, { position: 'absolute', opacity }]}>
-                      {count} more
-                    </Animated.Text>
-                  ))}
-                </View>
-                <Ionicons name="chevron-forward" size={13} color={UI.accentText} />
-              </Pressable>
-            </View>
-          </View>
-        ) : null}
       </View>
 
       <ScrollView style={styles.verticalTimeline} nestedScrollEnabled>
         <View style={styles.vtBody}>
-          <View style={styles.vtTimeColumn}>
-            <View style={[styles.vtLine, { left: VT_LINE_X - 1 }]} />
-            {rows.map((row) => {
-              const clock = clockParts(row.minutes);
-              return (
-                <View key={row.key} style={[styles.vtTimeCell, { height: row.height }]}>
-                  <View style={styles.vtTimeLabel}>
-                    <Text style={[styles.vtTimeText, row.isNow && { color: NOW_COLOR }]}>
-                      {row.isNow ? 'Now' : clock.time}
-                    </Text>
-                    <Text style={styles.vtTimePeriod}>
-                      {row.isNow ? `${clock.time} ${clock.period}` : clock.period}
-                    </Text>
-                  </View>
-                  <View
-                    style={[
-                      styles.vtDot,
-                      { left: VT_LINE_X - 6, backgroundColor: row.dotColor },
-                    ]}
-                  />
-                </View>
-              );
-            })}
-          </View>
-
+          <View style={styles.vtTimeColumn}>{timeCells}</View>
           <Animated.ScrollView
-            ref={gridRef}
             horizontal
             nestedScrollEnabled
             showsHorizontalScrollIndicator
             style={{ width: gridViewportWidth }}
             contentContainerStyle={{ width: gridWidth }}
-            onScroll={handleScroll}
+            onScroll={handleNativeScroll}
             scrollEventThrottle={16}>
-            <View style={{ width: gridWidth }}>
-              {rows.map((row) => (
-                <View
-                  key={row.key}
-                  style={[
-                    styles.vtRow,
-                    row.isNow && styles.vtRowNow,
-                    { height: row.height },
-                  ]}>
-                  {columns.map((location) => (
-                    <View key={location} style={[styles.vtCell, { width: columnWidth }]}>
-                      {(row.cells.get(location) ?? []).map((session) => (
-                        <VerticalSessionCard
-                          key={`${session.EventId}-${session.Rink}-${session.StartDateTime}`}
-                          session={session}
-                          onPress={onSelectSession}
-                        />
-                      ))}
-                    </View>
-                  ))}
-                </View>
-              ))}
-            </View>
+            {grid}
           </Animated.ScrollView>
         </View>
       </ScrollView>
     </View>
   );
 }
+
