@@ -86,9 +86,16 @@ jobs:
             exit 0
           }
           $today = Get-Date -Format 'yyyy-MM-dd'
-          git commit -m "Update schedule data for $today [skip ci]"
+          $version = (Get-Content schedule-data.json -Raw | ConvertFrom-Json).version
+          git commit -m "Update schedule data to v$version for $today [skip ci]"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          git push
+          # If something was pushed to the branch while this ran, replay this
+          # commit on top of it instead of failing the push; otherwise the
+          # version that just went live would never be recorded, and next
+          # week's run would reuse its number.
+          git pull --rebase origin ${{ github.ref_name }}
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          git push origin HEAD:${{ github.ref_name }}
           exit $LASTEXITCODE
 
       # Keeps each week's scraped data downloadable from the run page.

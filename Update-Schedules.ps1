@@ -448,7 +448,26 @@ if ($WriteFullData) {
 # only the fields App.tsx reads. Each location's scheduleUrl stands in for a
 # per-session sourceUrl (all sessions at a location share it).
 # ---------------------------------------------------------------------------
+# Data version: one more than the version in the existing output file (1 if
+# there's no file or no version yet). The weekly workflow commits the file
+# back to the repo, so each run picks up where the last one left off. Only
+# the start of the file is scanned; `version` is written first.
+$previousVersion = 0
+if (Test-Path $OutputPath) {
+    $reader = [IO.StreamReader]::new($OutputPath)
+    try {
+        $buffer = [char[]]::new(4096)
+        $head = [string]::new($buffer, 0, $reader.Read($buffer, 0, $buffer.Length))
+    } finally {
+        $reader.Dispose()
+    }
+    $versionMatch = [regex]::Match($head, '"version"\s*:\s*(\d+)')
+    if ($versionMatch.Success) { $previousVersion = [int]$versionMatch.Groups[1].Value }
+}
+$dataVersion = $previousVersion + 1
+
 $appResult = [ordered]@{
+    version = $dataVersion
     retrievedAt = $retrievedAt
     failedLocations = @($failedLocations)
     locations = @($locations | ForEach-Object {
@@ -479,6 +498,7 @@ $appResult = [ordered]@{
 }
 
 $appResult | ConvertTo-Json -Depth 5 | Set-Content -Path $OutputPath -Encoding utf8
+Write-Host "Data version: $dataVersion"
 Write-Host "Activities: $($activities.Count)"
 Write-Host "Sessions: $($sessions.Count)"
 Write-Host "Unique scheduled activities: $($uniqueActivities.Count)"
