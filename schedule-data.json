@@ -1,5 +1,6 @@
 ﻿{
-    "retrievedAt":  "2026-09-26T19:12:51.7835833Z",
+    "version":  1,
+    "retrievedAt":  "2026-09-26T19:39:53.1954644Z",
     "failedLocations":  [
 
                         ],
@@ -5546,8 +5547,8 @@
                      {
                          "date":  "2026-10-02",
                          "day":  "Friday",
-                         "startTime":  "10:30 AM",
-                         "endTime":  "12:40 PM",
+                         "startTime":  "10:15 AM",
+                         "endTime":  "12:45 PM",
                          "location":  "Farmers Branch",
                          "rink":  "FB - Gaglardi Rink",
                          "activity":  "Public Skate",
@@ -15652,9 +15653,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6021053,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6021097,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -15665,9 +15666,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6021097,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  6021053,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -15691,9 +15692,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6021054,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6021098,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -15704,9 +15705,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6021098,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  6021054,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -15808,9 +15809,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6021102,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  6021058,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -15821,9 +15822,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6021058,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6021102,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -15873,9 +15874,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  5774106,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  5774155,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -15886,9 +15887,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  5774155,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  5774106,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -16146,9 +16147,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6055848,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6074768,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -16159,9 +16160,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6074768,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  6055848,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -16185,9 +16186,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6074769,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  6055849,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -16198,9 +16199,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6055849,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6074769,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -16367,9 +16368,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6055895,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6075307,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -16380,9 +16381,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6075307,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  6055895,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -16419,9 +16420,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6055897,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6075309,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -16432,21 +16433,8 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6075309,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
-                         "matchConfidence":  "exact"
-                     },
-                     {
-                         "date":  "2026-09-28",
-                         "day":  "Monday",
-                         "startTime":  "11:30 AM",
-                         "endTime":  "12:00 PM",
-                         "location":  "McKinney",
-                         "rink":  "MK - North Rink",
-                         "activity":  "Freestyle",
                          "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6055898,
+                         "eventId":  6055897,
                          "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
@@ -16461,6 +16449,19 @@
                          "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
                          "eventId":  6075310,
                          "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "matchConfidence":  "exact"
+                     },
+                     {
+                         "date":  "2026-09-28",
+                         "day":  "Monday",
+                         "startTime":  "11:30 AM",
+                         "endTime":  "12:00 PM",
+                         "location":  "McKinney",
+                         "rink":  "MK - North Rink",
+                         "activity":  "Freestyle",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  6055898,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -16549,9 +16550,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6075720,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  6056836,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -16562,9 +16563,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6056836,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6075720,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -16614,9 +16615,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6056838,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6075724,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -16627,9 +16628,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6075724,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  6056838,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -16705,9 +16706,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6074773,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  6055853,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -16718,9 +16719,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6055853,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6074773,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -16744,9 +16745,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6074774,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  6055854,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -16757,9 +16758,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6055854,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6074774,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -16861,9 +16862,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  5771389,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6074786,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -16874,22 +16875,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6074786,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
-                         "matchConfidence":  "exact"
-                     },
-                     {
-                         "date":  "2026-09-29",
-                         "day":  "Tuesday",
-                         "startTime":  "9:15 AM",
-                         "endTime":  "9:45 AM",
-                         "location":  "McKinney",
-                         "rink":  "MK - North Rink",
-                         "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6100393,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  5771389,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -16903,6 +16891,19 @@
                          "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
                          "eventId":  6055946,
                          "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "matchConfidence":  "exact"
+                     },
+                     {
+                         "date":  "2026-09-29",
+                         "day":  "Tuesday",
+                         "startTime":  "9:15 AM",
+                         "endTime":  "9:45 AM",
+                         "location":  "McKinney",
+                         "rink":  "MK - North Rink",
+                         "activity":  "Freestyle",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6100393,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -16939,9 +16940,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - South Rink",
                          "activity":  "Skating Pro Time",
-                         "description":  "Activity: McKinney - Skating Pro Time On Staff Coach 2026-2027 ",
-                         "eventId":  5931548,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32586",
+                         "description":  "Activity: McKinney - Skating Pro Time Skater 2026-2027 ",
+                         "eventId":  5931649,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32589",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -16952,9 +16953,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - South Rink",
                          "activity":  "Skating Pro Time",
-                         "description":  "Activity: McKinney - Skating Pro Time Skater 2026-2027 ",
-                         "eventId":  5931649,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32589",
+                         "description":  "Activity: McKinney - Skating Pro Time On Staff Coach 2026-2027 ",
+                         "eventId":  5931548,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32586",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -16991,9 +16992,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6100396,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  6055949,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -17004,9 +17005,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6055949,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6100396,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -17082,9 +17083,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6056808,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6075395,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -17095,9 +17096,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6075395,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  6056808,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -17199,9 +17200,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6056812,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6075399,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -17212,9 +17213,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6075399,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  6056812,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -17329,9 +17330,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6055860,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6074780,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -17342,9 +17343,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6074780,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  6055860,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -17472,9 +17473,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6055956,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6075156,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -17485,9 +17486,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6075156,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  6055956,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -17719,9 +17720,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6075529,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  6056819,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -17732,9 +17733,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6056819,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6075529,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -17758,9 +17759,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6056820,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6075530,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -17771,9 +17772,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6075530,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  6056820,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -18005,9 +18006,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6212538,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  6120292,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -18018,22 +18019,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6120292,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
-                         "matchConfidence":  "exact"
-                     },
-                     {
-                         "date":  "2026-10-01",
-                         "day":  "Thursday",
-                         "startTime":  "9:15 AM",
-                         "endTime":  "9:45 AM",
-                         "location":  "McKinney",
-                         "rink":  "MK - North Rink",
-                         "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6120302,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6212538,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -18047,6 +18035,19 @@
                          "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
                          "eventId":  6212546,
                          "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "matchConfidence":  "exact"
+                     },
+                     {
+                         "date":  "2026-10-01",
+                         "day":  "Thursday",
+                         "startTime":  "9:15 AM",
+                         "endTime":  "9:45 AM",
+                         "location":  "McKinney",
+                         "rink":  "MK - North Rink",
+                         "activity":  "Freestyle",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  6120302,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -18109,9 +18110,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6120304,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6212548,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -18122,22 +18123,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6212548,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
-                         "matchConfidence":  "exact"
-                     },
-                     {
-                         "date":  "2026-10-01",
-                         "day":  "Thursday",
-                         "startTime":  "10:45 AM",
-                         "endTime":  "11:15 AM",
-                         "location":  "McKinney",
-                         "rink":  "MK - North Rink",
-                         "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6212549,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  6120304,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -18151,6 +18139,19 @@
                          "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
                          "eventId":  6120305,
                          "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "matchConfidence":  "exact"
+                     },
+                     {
+                         "date":  "2026-10-01",
+                         "day":  "Thursday",
+                         "startTime":  "10:45 AM",
+                         "endTime":  "11:15 AM",
+                         "location":  "McKinney",
+                         "rink":  "MK - North Rink",
+                         "activity":  "Freestyle",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6212549,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -18187,9 +18188,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6120338,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6212679,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -18200,9 +18201,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6212679,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  6120338,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -18226,9 +18227,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6212680,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  6120339,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -18239,9 +18240,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6120339,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6212680,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -18408,9 +18409,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6120262,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6212504,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -18421,21 +18422,8 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6212504,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
-                         "matchConfidence":  "exact"
-                     },
-                     {
-                         "date":  "2026-10-02",
-                         "day":  "Friday",
-                         "startTime":  "7:00 AM",
-                         "endTime":  "7:30 AM",
-                         "location":  "McKinney",
-                         "rink":  "MK - North Rink",
-                         "activity":  "Freestyle",
                          "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6120263,
+                         "eventId":  6120262,
                          "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
@@ -18456,13 +18444,13 @@
                          "date":  "2026-10-02",
                          "day":  "Friday",
                          "startTime":  "7:00 AM",
-                         "endTime":  "8:00 AM",
+                         "endTime":  "7:30 AM",
                          "location":  "McKinney",
-                         "rink":  "MK - South Rink",
-                         "activity":  "Hockey Pro Time",
-                         "description":  "Activity: McKinney - Hockey Pro Time 2026-2027  ",
-                         "eventId":  5877782,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32565",
+                         "rink":  "MK - North Rink",
+                         "activity":  "Freestyle",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  6120263,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -18475,6 +18463,19 @@
                          "activity":  "Hockey Pro Time",
                          "description":  "Activity: McKinney - Hockey Pro Time ",
                          "eventId":  5550074,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32565",
+                         "matchConfidence":  "exact"
+                     },
+                     {
+                         "date":  "2026-10-02",
+                         "day":  "Friday",
+                         "startTime":  "7:00 AM",
+                         "endTime":  "8:00 AM",
+                         "location":  "McKinney",
+                         "rink":  "MK - South Rink",
+                         "activity":  "Hockey Pro Time",
+                         "description":  "Activity: McKinney - Hockey Pro Time 2026-2027  ",
+                         "eventId":  5877782,
                          "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32565",
                          "matchConfidence":  "exact"
                      },
@@ -18512,9 +18513,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6212507,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  6120265,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -18525,9 +18526,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6120265,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6212507,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -18577,9 +18578,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6120320,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6212562,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -18590,9 +18591,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6212562,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  6120320,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -18629,9 +18630,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6120321,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6212563,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -18642,9 +18643,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6212563,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  6120321,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -18681,9 +18682,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - South Rink",
                          "activity":  "Skating Pro Time",
-                         "description":  "Activity: McKinney - Skating Pro Time Skater 2026-2027 ",
-                         "eventId":  5931917,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32589",
+                         "description":  "Activity: McKinney - Skating Pro Time On Staff Coach 2026-2027 ",
+                         "eventId":  5931863,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32586",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -18694,22 +18695,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - South Rink",
                          "activity":  "Skating Pro Time",
-                         "description":  "Activity: McKinney - Skating Pro Time On Staff Coach 2026-2027 ",
-                         "eventId":  5931863,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32586",
-                         "matchConfidence":  "exact"
-                     },
-                     {
-                         "date":  "2026-10-02",
-                         "day":  "Friday",
-                         "startTime":  "11:00 AM",
-                         "endTime":  "11:30 AM",
-                         "location":  "McKinney",
-                         "rink":  "MK - North Rink",
-                         "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6120323,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney - Skating Pro Time Skater 2026-2027 ",
+                         "eventId":  5931917,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32589",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -18728,13 +18716,13 @@
                      {
                          "date":  "2026-10-02",
                          "day":  "Friday",
-                         "startTime":  "11:30 AM",
-                         "endTime":  "12:00 PM",
+                         "startTime":  "11:00 AM",
+                         "endTime":  "11:30 AM",
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
                          "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6120324,
+                         "eventId":  6120323,
                          "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
@@ -18754,13 +18742,13 @@
                      {
                          "date":  "2026-10-02",
                          "day":  "Friday",
-                         "startTime":  "12:00 PM",
-                         "endTime":  "12:30 PM",
+                         "startTime":  "11:30 AM",
+                         "endTime":  "12:00 PM",
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
                          "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6120335,
+                         "eventId":  6120324,
                          "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
@@ -18775,6 +18763,19 @@
                          "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
                          "eventId":  6212577,
                          "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "matchConfidence":  "exact"
+                     },
+                     {
+                         "date":  "2026-10-02",
+                         "day":  "Friday",
+                         "startTime":  "12:00 PM",
+                         "endTime":  "12:30 PM",
+                         "location":  "McKinney",
+                         "rink":  "MK - North Rink",
+                         "activity":  "Freestyle",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  6120335,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -18837,9 +18838,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6212690,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  6120349,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -18850,9 +18851,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6120349,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6212690,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -18902,9 +18903,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6120351,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6212692,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -18915,9 +18916,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6212692,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  6120351,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -18967,9 +18968,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
-                         "eventId":  6212694,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
+                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
+                         "eventId":  6120353,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -18980,9 +18981,9 @@
                          "location":  "McKinney",
                          "rink":  "MK - North Rink",
                          "activity":  "Freestyle",
-                         "description":  "Activity: McKinney- Freestyle (On Staff Coach) 2026-2027 ",
-                         "eventId":  6120353,
-                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32571",
+                         "description":  "Activity: McKinney- Open Freestyle (Skater) 2026-2027 ",
+                         "eventId":  6212694,
+                         "signupUrl":  "https://starcenter.finnlyconnect.com/registration/activityitemv2/32572",
                          "matchConfidence":  "exact"
                      },
                      {
@@ -33769,7 +33770,7 @@
                      {
                          "date":  "2026-09-26",
                          "day":  "Saturday",
-                         "startTime":  "12:45 PM",
+                         "startTime":  "12:55 PM",
                          "endTime":  "2:00 PM",
                          "location":  "Plano",
                          "rink":  "PL - World Rink",
