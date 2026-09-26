@@ -17,7 +17,6 @@ import {
 // Deep import: the package root pulls in every icon family's font (~4.5 MB of
 // .ttf in the web build) even though only Ionicons is used.
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { LinearGradient } from 'expo-linear-gradient';
 import {
   SafeAreaView,
   useSafeAreaInsets,
@@ -31,6 +30,7 @@ import { AboutModal } from './components/AboutModal';
 import { SecondaryButton } from './components/Controls';
 import { DatePickerModal } from './components/DatePickerModal';
 import { FilterModal } from './components/FilterModal';
+import { HeaderBackdrop } from './components/HeaderBackdrop';
 import { MemeCaption } from './components/MemeCaption';
 import { SessionDetailModal } from './components/SessionDetailModal';
 import { HorizontalTimeline } from './components/HorizontalTimeline';
@@ -38,11 +38,8 @@ import { VerticalTimeline } from './components/VerticalTimeline';
 import {
   ACTIVITY_GROUPS,
   FILTER_STORAGE_KEY,
-  HEADER_FADE_ALPHAS,
-  HEADER_FADE_FRACTION,
   HEADER_MAX_HEIGHT,
   HEADER_MIN_HEIGHT,
-  HEADER_TITLE_ZONE,
   OTHER_ACTIVITY_GROUP,
   pageSidePadding,
   TIMELINE_VIEW_STORAGE_KEY,
@@ -56,16 +53,11 @@ import {
 } from './data/schedule';
 import { ThemeContext } from './theme/ThemeContext';
 import type { RawScheduleData, Session } from './types';
-import { withAlpha } from './utils/colors';
 import { formatDate, localDateKey } from './utils/dates';
 import { openDirectionsForAddress } from './utils/links';
 
-// Cropped and compressed from the Unsplash originals in the project root
-// (~1000px wide, about 100 KB or less each) so they don't bloat the web
-// bundle. Header images are 3:2 so `cover` can fill any header size while
-// staying vertically centered on the subject.
-const HEADER_HOCKEY_IMAGE = require('../assets/images/header-hockey.jpg');
-const HEADER_SKATER_IMAGE = require('../assets/images/header-skater.jpg');
+// Cropped and compressed from the Unsplash original (~1000px wide, about
+// 100 KB) so it doesn't bloat the web bundle.
 const EMPTY_STATE_IMAGE = require('../assets/images/empty-rink.jpg');
 
 // Space between the top of the header's content area (below the status bar
@@ -73,9 +65,8 @@ const EMPTY_STATE_IMAGE = require('../assets/images/empty-rink.jpg');
 // which it replaces so the safe-area inset can be added to it.
 const HEADER_CONTENT_TOP_PADDING = 14;
 
-// The About button is hidden from the header for now; the About modal is
-// kept so flipping this back to true restores it.
-const SHOW_ABOUT_BUTTON = false;
+// Shows the About (info) button in the header, which opens the About modal.
+const SHOW_ABOUT_BUTTON = true;
 
 export default function ScheduleApp() {
   const {
@@ -340,15 +331,8 @@ export default function ScheduleApp() {
 
   const activeFilterCount = selectedLocations.size + selectedActivities.size;
 
-  // Figure skater on the dark arena for dark mode, hockey player on bright ice
-  // for light mode.
-  const headerImage = isDarkMode ? HEADER_SKATER_IMAGE : HEADER_HOCKEY_IMAGE;
-
   // Full-width banner. Height follows the photos' 3:1 shape, clamped so it
   // always fits the title on phones and never eats the schedule on desktop.
-  // The photo is always exactly header-height tall and pinned right, so its
-  // subject is never cropped: on phones only its empty left edge overflows,
-  // and on wide screens the theme background fills the space to its left.
   const headerContentHeight = Math.round(
     Math.min(HEADER_MAX_HEIGHT, Math.max(HEADER_MIN_HEIGHT, windowWidth / 3))
   );
@@ -356,31 +340,6 @@ export default function ScheduleApp() {
   // page doesn't pad its top edge), so the photo fills that strip too while
   // the title and buttons are pushed down below it.
   const headerHeight = headerContentHeight + insets.top;
-  const headerImageWidth = headerHeight * 3;
-  // One smooth gradient: solid theme background up to where the photo starts,
-  // then an eased fade to clear across the photo's (pre-blurred) empty left
-  // side. Always reaches past the title so it stays readable.
-  const headerFade = useMemo(() => {
-    const fadeStart = Math.max(0, windowWidth - headerImageWidth);
-    const fadeEnd = Math.max(
-      HEADER_TITLE_ZONE,
-      fadeStart + headerImageWidth * HEADER_FADE_FRACTION
-    );
-    const solidUntil = fadeStart / fadeEnd;
-    // HEADER_FADE_ALPHAS has 7 entries, satisfying LinearGradient's
-    // "at least two stops" tuple types.
-    return {
-      width: fadeEnd,
-      colors: HEADER_FADE_ALPHAS.map((alpha) =>
-        withAlpha(UI.bg, alpha)
-      ) as unknown as readonly [string, string, ...string[]],
-      locations: HEADER_FADE_ALPHAS.map(
-        (_, index) =>
-          solidUntil +
-          (1 - solidUntil) * (index / (HEADER_FADE_ALPHAS.length - 1))
-      ) as unknown as readonly [number, number, ...number[]],
-    };
-  }, [windowWidth, headerImageWidth, UI.bg]);
 
   const resetFilters = useCallback(() => {
     setSelectedLocations(new Set());
@@ -487,22 +446,10 @@ export default function ScheduleApp() {
               paddingTop: HEADER_CONTENT_TOP_PADDING + insets.top,
             },
           ]}>
-          <Image
-            source={headerImage}
-            resizeMode="cover"
-            style={[
-              styles.headerImage,
-              { width: headerImageWidth, height: headerHeight },
-            ]}
-            accessibilityIgnoresInvertColors
-          />
-          <LinearGradient
-            pointerEvents="none"
-            colors={headerFade.colors}
-            locations={headerFade.locations}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={[styles.headerFade, { width: headerFade.width }]}
+          <HeaderBackdrop
+            isDarkMode={isDarkMode}
+            width={windowWidth}
+            height={headerHeight}
           />
           <Text style={styles.eyebrow}>DALLAS STARS ICE FINDER</Text>
           <Text style={styles.title}>STARCENTER TIMES</Text>

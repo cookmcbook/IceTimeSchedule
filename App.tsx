@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Platform, StatusBar, useColorScheme } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { THEME_STORAGE_KEY } from './src/constants';
+import { THEME_STORAGE_KEY, THEME_TRANSITION_MS } from './src/constants';
 import ScheduleApp from './src/ScheduleApp';
 import { DARK_UI, LIGHT_UI } from './src/theme/colors';
 import { createStyles } from './src/theme/styles';
@@ -58,10 +58,24 @@ export default function App() {
       ?.setAttribute('content', colors.bg);
   }, [colors.bg]);
 
-  const toggleTheme = useCallback(
-    () => setIsDarkMode((current) => !current),
-    []
-  );
+  // Web: fade the page's colors on a theme switch. The .theme-transition
+  // class (public/index.html) turns on CSS color transitions only for the
+  // switch itself, so they never slow down scrolling or button feedback the
+  // rest of the time. The header photo crossfades on its own
+  // (HeaderBackdrop), on every platform.
+  const transitionTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const toggleTheme = useCallback(() => {
+    if (Platform.OS === 'web' && typeof document !== 'undefined') {
+      const root = document.documentElement;
+      root.classList.add('theme-transition');
+      if (transitionTimer.current) clearTimeout(transitionTimer.current);
+      transitionTimer.current = setTimeout(() => {
+        root.classList.remove('theme-transition');
+        transitionTimer.current = null;
+      }, THEME_TRANSITION_MS + 100);
+    }
+    setIsDarkMode((current) => !current);
+  }, []);
   const themeValue = useMemo(
     () => ({ colors, styles, isDarkMode, toggleTheme }),
     [colors, styles, isDarkMode, toggleTheme]

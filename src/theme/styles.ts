@@ -49,17 +49,6 @@ export function createStyles(UI: ThemeColors) {
       alignItems: 'flex-start',
       backgroundColor: UI.bg,
     },
-    headerImage: {
-      position: 'absolute',
-      top: 0,
-      right: 0,
-    },
-    headerFade: {
-      position: 'absolute',
-      top: 0,
-      bottom: 0,
-      left: 0,
-    },
     headingActions: {
       flexDirection: 'row',
       alignItems: 'center',

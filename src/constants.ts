@@ -34,6 +34,11 @@ export function pageSidePadding(windowWidth: number): number {
   return 0;
 }
 
+// How long a dark/light theme switch takes to fade (header photo crossfade,
+// and on web the page's colors). Keep in sync with the .theme-transition
+// rule in public/index.html.
+export const THEME_TRANSITION_MS = 600;
+
 export const CONTROL_HEIGHT = 44;
 export const MIN_TAP_TARGET = 44;
 

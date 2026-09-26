@@ -9,11 +9,20 @@ import { SecondaryButton } from './Controls';
 // ---------------------------------------------------------------------------
 // ABOUT MODAL
 // ---------------------------------------------------------------------------
+
+// Feature flags for the author section. Flip any to true to show it again.
+const SHOW_MADE_BY = false; // "Made by Tony Qing" credit (links to portfolio)
+const SHOW_LINKEDIN = false; // LinkedIn button
+const SHOW_PORTFOLIO = false; // Portfolio button
+const SHOW_EMAIL_BUTTON = true; // Email button (opens a new email)
+const SHOW_EMAIL_TEXT = false; // Plain-text email address under the buttons
+
 const AUTHOR_NAME = 'Tony Qing';
 const AUTHOR_URL = 'https://tonyxqing.github.io';
 const AUTHOR_EMAIL = 'tonyqing2022@gmail.com';
 // Brand colors are fixed (not themed) so each icon stays recognizable.
 const CONTACT_LINKS: {
+  show: boolean;
   icon: React.ComponentProps<typeof Ionicons>['name'];
   color: string;
   label: string;
@@ -21,6 +30,7 @@ const CONTACT_LINKS: {
   onPress: () => void;
 }[] = [
     {
+      show: SHOW_LINKEDIN,
       icon: 'logo-linkedin',
       color: '#0A66C2',
       label: 'LinkedIn',
@@ -29,6 +39,7 @@ const CONTACT_LINKS: {
         openExternalUrl('https://www.linkedin.com/in/tony-qing-123600192'),
     },
     {
+      show: SHOW_PORTFOLIO,
       icon: 'globe-outline',
       color: '#00A86B',
       label: 'Portfolio',
@@ -36,6 +47,7 @@ const CONTACT_LINKS: {
       onPress: () => openExternalUrl(AUTHOR_URL),
     },
     {
+      show: SHOW_EMAIL_BUTTON,
       icon: 'mail',
       color: '#EA4335',
       label: 'Email',
@@ -45,6 +57,7 @@ const CONTACT_LINKS: {
         void Linking.openURL(`mailto:${AUTHOR_EMAIL}`).catch(() => undefined),
     },
   ];
+const VISIBLE_CONTACT_LINKS = CONTACT_LINKS.filter((link) => link.show);
 
 export const AboutModal = React.memo(function AboutModal({
   visible,
@@ -78,32 +91,38 @@ export const AboutModal = React.memo(function AboutModal({
             comes from the public StarCenter schedule pages. Photos by Gerhard
             Crous, Chris Desort, and Nathanael Desmeules on Unsplash.
           </Text>
-          <Pressable
-            onPress={() => openExternalUrl(AUTHOR_URL)}
-            accessibilityRole="link"
-            accessibilityLabel={`Made by ${AUTHOR_NAME}. Opens portfolio`}
-            hitSlop={8}
-            style={styles.aboutCredit}>
-            <Text style={styles.aboutCreditText}>
-              Made by <Text style={styles.aboutCreditName}>{AUTHOR_NAME}</Text>
+          {SHOW_MADE_BY ? (
+            <Pressable
+              onPress={() => openExternalUrl(AUTHOR_URL)}
+              accessibilityRole="link"
+              accessibilityLabel={`Made by ${AUTHOR_NAME}. Opens portfolio`}
+              hitSlop={8}
+              style={styles.aboutCredit}>
+              <Text style={styles.aboutCreditText}>
+                Made by <Text style={styles.aboutCreditName}>{AUTHOR_NAME}</Text>
+              </Text>
+            </Pressable>
+          ) : null}
+          {VISIBLE_CONTACT_LINKS.length > 0 ? (
+            <View style={styles.aboutLinks}>
+              {VISIBLE_CONTACT_LINKS.map((link) => (
+                <Pressable
+                  key={link.label}
+                  onPress={link.onPress}
+                  accessibilityRole="link"
+                  accessibilityLabel={link.accessibilityLabel}
+                  style={styles.aboutLinkChip}>
+                  <Ionicons name={link.icon} size={16} color={link.color} />
+                  <Text style={styles.aboutLinkChipText}>{link.label}</Text>
+                </Pressable>
+              ))}
+            </View>
+          ) : null}
+          {SHOW_EMAIL_TEXT ? (
+            <Text style={styles.aboutEmail} selectable>
+              {AUTHOR_EMAIL}
             </Text>
-          </Pressable>
-          <View style={styles.aboutLinks}>
-            {CONTACT_LINKS.map((link) => (
-              <Pressable
-                key={link.label}
-                onPress={link.onPress}
-                accessibilityRole="link"
-                accessibilityLabel={link.accessibilityLabel}
-                style={styles.aboutLinkChip}>
-                <Ionicons name={link.icon} size={16} color={link.color} />
-                <Text style={styles.aboutLinkChipText}>{link.label}</Text>
-              </Pressable>
-            ))}
-          </View>
-          <Text style={styles.aboutEmail} selectable>
-            {AUTHOR_EMAIL}
-          </Text>
+          ) : null}
           <View style={{ marginTop: 16 }}>
             <SecondaryButton label="Close" onPress={onClose} />
           </View>

@@ -63,6 +63,17 @@
       body {
         overscroll-behavior: none;
       }
+      /* Dark/light switch: fade colors instead of snapping. The app adds this
+         class to <html> only for the length of the switch (App.tsx), so it
+         never affects scrolling or press feedback otherwise. 600ms matches
+         THEME_TRANSITION_MS in src/constants.ts. */
+      html.theme-transition,
+      html.theme-transition *,
+      html.theme-transition *::before,
+      html.theme-transition *::after {
+        transition: background-color 600ms ease, color 600ms ease,
+          border-color 600ms ease, fill 600ms ease !important;
+      }
       /* These styles make the root element full-height */
       #root {
         display: flex;
