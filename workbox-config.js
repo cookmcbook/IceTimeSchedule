@@ -14,7 +14,9 @@ module.exports = {
   maximumFileSizeToCacheInBytes: 8 * 1024 * 1024,
   swDest: 'dist/sw.js',
   sourcemap: false,
-  navigateFallback: '/index.html',
+  // Relative, so it resolves against sw.js's location: / on Netlify,
+  // /IceTimeSchedule/ on GitHub Pages.
+  navigateFallback: 'index.html',
   cleanupOutdatedCaches: true,
   skipWaiting: true,
   clientsClaim: true

@@ -15,16 +15,18 @@
          background (not a fixed white/black bar) shows behind the clock. -->
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="StarCenter Times" />
-    <link rel="manifest" href="/manifest.json" />
-    <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png" />
+    <!-- Relative paths so the app works at the site root (Netlify) and under
+         /IceTimeSchedule/ (GitHub Pages). -->
+    <link rel="manifest" href="manifest.json" />
+    <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function () {
-          fetch('/sw.js', { method: 'HEAD' })
+          fetch('sw.js', { method: 'HEAD' })
             .then(function (response) {
               var contentType = response.headers.get('content-type') || '';
               if (contentType.indexOf('javascript') !== -1) {
-                return navigator.serviceWorker.register('/sw.js');
+                return navigator.serviceWorker.register('sw.js');
               }
               return null;
             })
